@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)file:///Users/solidus/Downloads/index_4.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lisa Menerick Piano Studio — Master Pedagogue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./beta_files/css2" rel="stylesheet">
+  <script src="./beta_files/three.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080806;
+      --white: #f2ede8;
+      --warm: #c8975a;
+      --accent: #d4a96a;
+      --muted: rgba(242,237,232,0.45);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-mono: 'Geist Mono', 'Courier New', monospace;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-mono);
+      overflow: hidden;
+      cursor: none;
+    }
+
+    /* ── Canvas ── */
+    #canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* ── Custom cursor ── */
+    #cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--white);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+      mix-blend-mode: difference;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1px solid rgba(242,237,232,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease-out, width 0.3s, height 0.3s;
+    }
+    body:has(a:hover) #cursor-ring,
+    body:has(button:hover) #cursor-ring { width: 48px; height: 48px; }
+
+    /* ── UI overlay ── */
+    #ui {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 36px;
+      pointer-events: all;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .logo-mark {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(242,237,232,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      text-decoration: none;
+      transition: border-color 0.25s;
+    }
+    .logo-mark:hover { border-color: var(--white); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(242,237,232,0.7);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(242,237,232,0.3);
+      padding-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s;
+    }
+    .nav-cta:hover { border-color: var(--white); }
+    .nav-cta svg { width: 12px; height: 12px; }
+
+    /* ── Hero text ── */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 36px 56px;
+      pointer-events: all;
+    }
+
+    .hero-tag {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--warm);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      max-width: 580px;
+      margin-bottom: 32px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      max-width: 260px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--warm);
+      color: var(--black);
+    }
+    .btn-primary svg { width: 12px; height: 12px; }
+
+    .btn-ghost {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: none;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--white); }
+
+    /* ── Scroll indicator ── */
+    .scroll-hint {
+      position: fixed;
+      bottom: 40px;
+      right: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .scroll-hint span {
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--muted));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ── Stats strip (bottom right) ── */
+    .stats {
+      position: fixed;
+      bottom: 36px;
+      right: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 10;
+      pointer-events: none;
+      align-items: flex-end;
+    }
+    .stat {
+      text-align: right;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--white);
+    }
+    .stat-label {
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── Load screen ── */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+
+    .loader-logo {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--warm);
+    }
+    .loader-bar-wrap {
+      width: 160px;
+      height: 1px;
+      background: rgba(242,237,232,0.1);
+      overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%;
+      background: var(--warm);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .loader-pct {
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+
+    /* ── Entry animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Content Panels (Pedagogy / Programs / Admissions) ── */
+    .content-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      overflow-y: auto;
+      background: rgba(6,5,4,0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.55s ease, visibility 0.55s;
+      display: flex;
+      justify-content: center;
+    }
+    .content-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .panel-inner {
+      width: 100%;
+      max-width: 860px;
+      padding: 120px 48px 96px;
+    }
+    .panel-close {
+      position: fixed;
+      top: 32px;
+      right: 36px;
+      z-index: 30;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: none;
+      border: none;
+      background: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.2s;
+    }
+    .panel-close:hover { color: var(--white); }
+    .panel-close::before {
+      content: '';
+      display: block;
+      width: 20px; height: 1px;
+      background: currentColor;
+    }
+
+    .panel-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .panel-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--warm);
+    }
+
+    .panel-h1 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(40px, 5vw, 72px);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+      color: var(--white);
+    }
+    .panel-h1 em { font-style: italic; color: var(--accent); }
+
+    .panel-intro {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(242,237,232,0.85);
+      margin-bottom: 64px;
+      max-width: 680px;
+      border-left: 1px solid var(--warm);
+      padding-left: 28px;
+    }
+
+    .panel-divider {
+      width: 48px;
+      height: 1px;
+      background: rgba(242,237,232,0.12);
+      margin: 56px 0;
+    }
+
+    .section-label {
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .section-heading em { font-style: italic; color: var(--accent); }
+
+    .section-body {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(242,237,232,0.72);
+      max-width: 680px;
+      margin-bottom: 40px;
+    }
+
+    /* Value Pillars */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin: 56px 0;
+    }
+    @media (max-width: 680px) { .pillars { grid-template-columns: 1fr; } }
+    .pillar {
+      padding: 36px 28px;
+      border: 1px solid rgba(242,237,232,0.07);
+      background: rgba(242,237,232,0.02);
+    }
+    .pillar-num {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: var(--warm);
+      margin-bottom: 18px;
+      display: block;
+    }
+    .pillar-title {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .pillar-title em { font-style: italic; color: var(--accent); }
+    .pillar-body {
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      line-height: 1.85;
+      color: rgba(242,237,232,0.55);
+    }
+
+    /* Program Cards */
+    .program-cards { display: flex; flex-direction: column; gap: 2px; margin: 40px 0; }
+    .program-card {
+      padding: 40px 36px;
+      border: 1px solid rgba(242,237,232,0.07);
+      background: rgba(242,237,232,0.02);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .program-card:hover { background: rgba(242,237,232,0.04); }
+    .program-card-num {
+      position: absolute;
+      top: 28px; right: 32px;
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 300;
+      color: rgba(242,237,232,0.04);
+      line-height: 1;
+    }
+    .program-card-label {
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 12px;
+    }
+    .program-card-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+    .program-card-title em { font-style: italic; color: var(--accent); }
+    .program-card-body {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(242,237,232,0.65);
+      max-width: 640px;
+    }
+
+    /* Steps (Admissions) */
+    .steps { display: flex; flex-direction: column; gap: 2px; margin: 40px 0; }
+    .step {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 0;
+      border: 1px solid rgba(242,237,232,0.07);
+    }
+    .step-num-col {
+      padding: 32px 0 32px 28px;
+      border-right: 1px solid rgba(242,237,232,0.07);
+      display: flex;
+      align-items: flex-start;
+    }
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 300;
+      color: rgba(200,151,90,0.35);
+      line-height: 1;
+    }
+    .step-content { padding: 32px 36px; }
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .step-title em { font-style: italic; color: var(--accent); }
+    .step-body {
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      line-height: 1.85;
+      color: rgba(242,237,232,0.55);
+    }
+
+    /* FAQ */
+    .faq { margin: 40px 0; }
+    .faq-item {
+      border-bottom: 1px solid rgba(242,237,232,0.07);
+      padding: 28px 0;
+    }
+    .faq-q {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .faq-a {
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      line-height: 1.85;
+      color: rgba(242,237,232,0.55);
+      max-width: 640px;
+    }
+
+    /* CTA Buttons block */
+    .cta-block {
+      margin: 48px 0 0;
+      padding: 40px 36px;
+      border: 1px solid rgba(200,151,90,0.2);
+      background: rgba(200,151,90,0.04);
+    }
+    .cta-block-label {
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 24px;
+    }
+    .cta-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .cta-opt {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 26px;
+      border: 1px solid rgba(242,237,232,0.15);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      cursor: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cta-opt:hover { border-color: var(--warm); background: rgba(200,151,90,0.08); }
+    .cta-opt.primary {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+    .cta-opt.primary:hover { background: var(--warm); border-color: var(--warm); }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="loader" class="hidden">
+    <div class="loader-logo">Menerick Piano Studio</div>
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar" style="width: 100%;"></div></div>
+    <div class="loader-pct" id="loader-pct">100%</div>
+  </div>
+
+  <!-- Custom cursor -->
+  <div id="cursor" style="left: 530px; top: 354px;"></div>
+  <div id="cursor-ring" style="left: 1109.92px; top: 549.36px;"></div>
+
+  <!-- Three.js canvas -->
+  <canvas id="canvas" width="2400" height="1634" style="width: 1200px; height: 817px;"></canvas>
+
+  <!-- UI -->
+  <div id="ui">
+    <nav>
+      <div class="nav-left">
+        <a href="file:///Users/solidus/Downloads/index_4.html#" class="logo-mark" id="nav-home">LM</a>
+        <ul class="nav-links">
+          <li><a href="file:///Users/solidus/Downloads/index_4.html#" data-panel="pedagogy">Pedagogy</a></li>
+          <li><a href="file:///Users/solidus/Downloads/index_4.html#" data-panel="programs">Programs</a></li>
+          <li><a href="file:///Users/solidus/Downloads/index_4.html#" data-panel="admissions">Admissions</a></li>
+        </ul>
+      </div>
+      <a href="file:///Users/solidus/Downloads/index_4.html#" class="nav-cta" data-panel="admissions">
+        Request a Consultation
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 10L10 2M10 2H4M10 2v6"></path>
+        </svg>
+      </a>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-tag reveal in">Master Pedagogue &nbsp;·&nbsp; Est. 1984</div>
+      <h1 class="reveal in" style="transition-delay:0.1s">
+        Where discipline<br>
+        becomes <em>artistry,</em><br>
+        and children flourish.
+      </h1>
+      <p class="hero-sub reveal in" style="transition-delay:0.2s">
+        Forty years of classical instruction, character formation, and musical mastery — guided by one unwavering standard of excellence.
+      </p>
+      <div class="cta-row reveal in" style="transition-delay:0.3s">
+        <a href="file:///Users/solidus/Downloads/index_4.html#" class="btn-primary" data-panel="admissions">
+          Request a Consultation
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 10L10 2M10 2H4M10 2v6"></path>
+          </svg>
+        </a>
+        <a href="file:///Users/solidus/Downloads/index_4.html#" class="btn-ghost" data-panel="pedagogy">Our Approach</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats reveal in" style="transition-delay:0.5s">
+    <div class="stat">
+      <div class="stat-num">40+</div>
+      <div class="stat-label">Years of instruction</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Curated programs</div>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Explore</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       PANEL 1 · PEDAGOGY
+  ════════════════════════════════════════════════ -->
+  <div class="content-panel" id="panel-pedagogy">
+    <button class="panel-close" data-close="">Close</button>
+    <div class="panel-inner">
+
+      <div class="panel-eyebrow">Philosophy of Instruction</div>
+      <h1 class="panel-h1">The <em>Menerick</em><br>Method</h1>
+      <p class="panel-intro">
+        True musical education does not begin at the keys — it begins in the character of the child. For four decades, Lisa Menerick has refined a pedagogy that draws from the foundational principles of the Suzuki tradition, the rigors of classical technique, and the irreplaceable formation of personal discipline. The result is a methodology that develops whole human beings, not merely competent performers.
+      </p>
+
+      <div class="section-label">Teaching Philosophy</div>
+      <h2 class="section-heading">Suzuki Influence &amp; <em>Technical Mastery</em></h2>
+      <p class="section-body">
+        The Menerick Method is deeply informed by the Suzuki philosophy that every child possesses the capacity for musical excellence when nurtured within a consistent, encouraging environment. Like Suzuki, Mrs. Menerick believes that the ear must lead the hand — that aural development, the internalized understanding of pitch, phrase, and musical intention, is the proper foundation for all technical achievement. A student who hears beautifully will eventually play beautifully.
+      </p>
+      <p class="section-body">
+        Upon this aural foundation, the Method builds rigorous technical dexterity: finger independence, proper hand position, voicing control, and dynamic range. These are not superficial habits but structural disciplines — the same disciplines that allow a student to move, in time, from Bartók's Mikrokosmos to a Chopin nocturne with integrity and ease. Technique is never an end in itself; it is the vocabulary through which musicality speaks.
+      </p>
+
+      <div class="panel-divider"></div>
+
+      <div class="section-label">Character Formation</div>
+      <h2 class="section-heading">Discipline as a <em>Life Skill</em></h2>
+      <p class="section-body">
+        Mrs. Menerick has observed, across generations of students, that the habits formed at the piano bench extend far beyond the studio. The child who learns to practice deliberately — to identify a problem, isolate it, and solve it through patient repetition — is developing the same cognitive discipline that will serve them in mathematics, athletics, writing, and leadership. The instrument is the occasion; the formation is the purpose.
+      </p>
+      <p class="section-body">
+        Every lesson incorporates intentional moments of reflection: not merely "what did you play" but "how did you listen, how did you problem-solve, how did you persist when the passage resisted you?" These questions, asked consistently over years, shape students who are not only capable musicians but composed, resilient, and self-directed individuals.
+      </p>
+
+      <div class="panel-divider"></div>
+
+      <div class="section-label">Annual Milestone</div>
+      <h2 class="section-heading">The Spring <em>Recital</em></h2>
+      <p class="section-body">
+        Each year, the studio's Spring Recital stands as the culminating expression of the year's work — not a performance for parents alone, but a genuine rite of passage for every student. Mrs. Menerick prepares students not merely to play their pieces correctly but to inhabit them with confidence, poise, and communicative presence.
+      </p>
+      <p class="section-body">
+        The experience of performing before an audience — of managing anticipation, channeling preparation into presence, and receiving the acknowledgement of peers — is formative in ways that private practice alone cannot replicate. For many students, the Spring Recital is the first moment they discover that they are, in fact, capable of something extraordinary. That discovery, once made, is never forgotten.
+      </p>
+
+      <div class="panel-divider"></div>
+
+      <div class="section-label">Affiliations</div>
+      <p class="section-body" style="font-size:13px; color:rgba(242,237,232,0.45); letter-spacing:0.04em;">
+        Member, Suzuki Association of the Americas &nbsp;·&nbsp; Member, National Guild of Piano Teachers
+      </p>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       PANEL 2 · PROGRAMS
+  ════════════════════════════════════════════════ -->
+  <div class="content-panel" id="panel-programs">
+    <button class="panel-close" data-close="">Close</button>
+    <div class="panel-inner">
+
+      <div class="panel-eyebrow">Studio Curriculum</div>
+      <h1 class="panel-h1">Three Paths to<br><em>Artistic Excellence</em></h1>
+      <p class="panel-intro">
+        The studio's programs are designed not as interchangeable products but as carefully considered pathways — each calibrated to a particular stage of development, learning style, and musical ambition. Every program reflects the standards of the Menerick Method while honoring the individuality of each student.
+      </p>
+
+      <div class="program-cards">
+
+        <div class="program-card">
+          <div class="program-card-num">I</div>
+          <div class="program-card-label">Flagship Program</div>
+          <h3 class="program-card-title">Private Piano &amp; <em>Voice Mastery</em></h3>
+          <p class="program-card-body">
+            The studio's foundational offering, Private Piano &amp; Voice Mastery, places the student at the center of an entirely individualized curriculum. No two students follow the same path — because no two musicians share the same strengths, temperament, or timeline. Within the private lesson, Mrs. Menerick conducts a continuous, evolving assessment of each student's aural development, technical dexterity, sight-reading fluency, and expressive musicality, shaping instruction to meet the student precisely where they are while consistently drawing them forward.
+            <br><br>
+            Repertoire selections are chosen not merely for their technical demands but for their capacity to illuminate musical ideas: the architecture of a Bach invention, the singing line of a Romantic melody, the rhythmic vitality of a contemporary étude. Vocal study may be integrated where appropriate, developing breath support, tonal resonance, and the intimate connection between sung phrase and piano voicing. Students enrolled in this program are prepared, at an appropriate stage, for participation in the National Guild of Piano Teachers evaluations — a nationally recognized measure of musical achievement and artistic readiness.
+          </p>
+        </div>
+
+        <div class="program-card">
+          <div class="program-card-num">II</div>
+          <div class="program-card-label">Group Instruction</div>
+          <h3 class="program-card-title">The Collaborative <em>Theory Group</em></h3>
+          <p class="program-card-body">
+            Music is, at its heart, a social art — and the Collaborative Theory Group honors that truth. Designed for students who have established foundational technique through private instruction, this small-group program develops the complementary skills that ensemble and academic music study demand: harmonic analysis, rhythmic dictation, ear training, sight-singing, and the compositional logic underlying the music they perform.
+            <br><br>
+            The group format is intentional. Students gain irreplaceable experience articulating their musical observations to peers, defending interpretive choices, and listening with the heightened attention that ensemble playing demands. Social-musical skills — the ability to play in time with others, to subordinate ego to ensemble blend, to recover gracefully from a misstep in real time — are cultivated through structured group activities and collaborative arrangement exercises. Parents frequently observe that Theory Group students develop not only greater musical comprehension but also markedly improved confidence in academic settings, a testament to the cognitive discipline that music theory demands. Enrollment is by placement, ensuring that groups remain cohesive in level and productive in dynamic.
+          </p>
+        </div>
+
+        <div class="program-card">
+          <div class="program-card-num">III</div>
+          <div class="program-card-label">Seasonal Intensive</div>
+          <h3 class="program-card-title">The Summer <em>Samplers</em></h3>
+          <p class="program-card-body">
+            The Summer Samplers address a challenge every serious music educator recognizes: the long summer recess, without intentional structure, erodes the muscular memory, aural acuity, and reading fluency that students have spent an academic year building. The studio's summer program is designed as the antidote — a focused, exploratory series of short-term intensives that maintain musical muscle while expanding a student's artistic vocabulary beyond the classical canon.
+            <br><br>
+            Each summer module introduces a new genre or idiom: Jazz harmony and improvisation, Brazilian choro, film score reduction, sacred hymnody, or popular song arrangement. Students apply their trained technical dexterity and theoretical understanding to unfamiliar musical languages, discovering both the universality of musicianship and the particular pleasures of stylistic exploration. The Samplers are deliberately designed to feel different from the academic year — lighter in formality, broader in repertoire, rich in discovery — while never abandoning the standards of careful listening and intentional practice that define the Menerick Method. Enrollment is open to all current studio students and select returning students by arrangement.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       PANEL 3 · ADMISSIONS
+  ════════════════════════════════════════════════ -->
+  <div class="content-panel" id="panel-admissions">
+    <button class="panel-close" data-close="">Close</button>
+    <div class="panel-inner">
+
+      <div class="panel-eyebrow">Studio Enrollment</div>
+      <h1 class="panel-h1">The Path to<br><em>Admission</em></h1>
+      <p class="panel-intro">
+        Placement within the Lisa Menerick Piano Studio is intentionally limited. This is not a matter of exclusivity for its own sake, but of pedagogical commitment: every student admitted to the studio receives the dedicated, sustained attention that genuine musical formation requires. Mrs. Menerick maintains a carefully sized studio roster so that no student is ever simply processed through a curriculum — each is known, each is guided with purpose, and each is held to a standard appropriate to their full potential.
+      </p>
+
+      <div class="section-label">Enrollment Process</div>
+      <h2 class="section-heading">A Three-Step <em>Path</em></h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num-col"><div class="step-num">01</div></div>
+          <div class="step-content">
+            <div class="step-title"><em>Initial Inquiry</em></div>
+            <p class="step-body">
+              Families begin by submitting a brief written inquiry, describing the prospective student's age, any prior musical experience, and the goals they hope the studio will serve. This inquiry need not be elaborate — a thoughtful paragraph is sufficient. Mrs. Menerick reviews all inquiries personally and responds within one week. Families whose students appear to be a strong match for the studio's current capacity will be invited to schedule a Student Consultation. There is no application fee.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num-col"><div class="step-num">02</div></div>
+          <div class="step-content">
+            <div class="step-title">Student Consultation &amp; <em>Placement Examination</em></div>
+            <p class="step-body">
+              The consultation is a relaxed, thirty-to-forty-five-minute meeting at the studio — a conversation as much as an assessment. Mrs. Menerick meets the prospective student, invites them to explore the piano freely, and engages in a brief, informal evaluation of their aural responsiveness, physical disposition at the instrument, and natural musicality. For students with prior instruction, a short sight-reading and technical review will be included. The purpose is placement, not judgment: to understand where the student is so that instruction can begin precisely from that point.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num-col"><div class="step-num">03</div></div>
+          <div class="step-content">
+            <div class="step-title"><em>Studio Integration</em></div>
+            <p class="step-body">
+              Upon successful placement, the family receives a Studio Agreement outlining lesson scheduling, practice expectations, recital participation, and the studio's philosophy of partnership between teacher, student, and family. The first three lessons are treated as a mutual orientation period: a time for the student to acclimate, for Mrs. Menerick to refine her initial assessment, and for families to confirm that the studio's approach aligns with their aspirations for their child. It is Mrs. Menerick's experience that when all three partners — teacher, student, and family — are fully engaged, the results are, without exception, extraordinary.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider"></div>
+
+      <div class="cta-block">
+        <div class="cta-block-label">Begin Your Inquiry</div>
+        <div class="cta-options">
+          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt primary">Request a Consultation</a>
+          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt">Schedule an Introduction</a>
+          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt">Inquire About Enrollment</a>
+          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt">Apply for Placement</a>
+          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt">Arrange a Studio Visit</a>
+        </div>
+      </div>
+
+      <div class="panel-divider"></div>
+
+      <div class="section-label">Frequently Asked Questions</div>
+      <h2 class="section-heading">For <em>Prospective Families</em></h2>
+
+      <div class="faq">
+
+        <div class="faq-item">
+          <div class="faq-q">At what age may a child begin instruction?</div>
+          <p class="faq-a">
+            The studio welcomes students beginning at age five, provided the child demonstrates the attentional readiness and physical coordination appropriate for early Suzuki-based instruction. Mrs. Menerick has found that early beginning is not merely permissible but deeply advantageous: the ear, the ear's formation, the natural absorption of musical language — these capacities are at their most plastic in the early years. That said, there is no upper limit. Students who begin in adolescence or adulthood are welcomed with equal seriousness and equal expectation of progress.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How much daily practice should we expect?</div>
+          <p class="faq-a">
+            Practice requirements are calibrated to the student's level and program. Beginning students typically practice fifteen to twenty minutes daily — a modest commitment that, when consistent, produces remarkable results within the first year. Intermediate students are expected to maintain thirty to forty-five minutes of focused daily practice. The emphasis is on the quality and intentionality of practice, not its duration. Mrs. Menerick will guide families specifically on what "productive practice" looks like at each stage, so that the time at home is genuinely formative rather than merely repetitive.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Is a piano at home required before enrollment?</div>
+          <p class="faq-a">
+            A practice instrument at home is essential — progress without daily access to the keyboard is simply not possible. A full-size acoustic piano is the ideal, though a quality weighted-key digital instrument is an acceptable and practical alternative for beginning students. Mrs. Menerick is glad to offer guidance on instrument selection at the time of enrollment. Families are encouraged to view the instrument as an investment in the student's formation — one that will serve them for decades.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What role does the parent play in the lesson process?</div>
+          <p class="faq-a">
+            Particularly for younger students, parental engagement is not optional — it is a cornerstone of the Menerick Method's effectiveness. Parents are invited to observe lessons, to take brief notes on the week's practice priorities, and to provide calm, encouraging support at home. A parent who is present, informed, and positive in their engagement with practice is among the most powerful factors in a young student's progress. Mrs. Menerick views the family as a genuine partner in the student's formation, and her communication with families is direct, specific, and ongoing.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What distinguishes this studio from other private instruction?</div>
+          <p class="faq-a">
+            The Menerick Method is distinguished not by a single technique or a particular repertoire list, but by an integrated vision of what music education is for. Over forty years, Mrs. Menerick has watched students leave the studio and go on to careers in medicine, law, science, and the arts — carrying with them not necessarily a musical vocation, but the disciplined mind, the capacity for sustained concentration, and the confidence that comes from having mastered something genuinely difficult. It is this formation — technical, musical, and human — that the studio exists to provide.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+  (function() {
+
+    // ── Cursor ──
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    // ── Mouse tracking for 3D parallax ──
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    // ── Three.js Scene ──
+    const canvas = document.getElementById('canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.9;
+    renderer.setClearColor(0x060504);
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x060504, 0.026);
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(4.8, 4.2, 8.5);
+    camera.lookAt(0, 1.0, 1.2);
+
+    // ── Materials ──
+    const pianoBodyMat = new THREE.MeshStandardMaterial({
+      color: 0x060504, roughness: 0.025, metalness: 0.88,
+    });
+    const pianoInnerMat = new THREE.MeshStandardMaterial({
+      color: 0x2e1e0e, roughness: 0.88, metalness: 0.0,
+    });
+    const keyWhiteMat = new THREE.MeshStandardMaterial({
+      color: 0xece8e0, roughness: 0.25, metalness: 0.0,
+    });
+    const keyBlackMat = new THREE.MeshStandardMaterial({
+      color: 0x080706, roughness: 0.08, metalness: 0.5,
+    });
+    const pedalMat = new THREE.MeshStandardMaterial({
+      color: 0xc8a428, roughness: 0.05, metalness: 0.96,
+    });
+    const benchCushionMat = new THREE.MeshStandardMaterial({
+      color: 0x181210, roughness: 0.88, metalness: 0.0,
+    });
+    const floorMat = new THREE.MeshStandardMaterial({
+      color: 0x0d0a08, roughness: 0.03, metalness: 0.85,
+    });
+
+    // ── Build piano model ──
+    const group = new THREE.Group();
+    scene.add(group);
+
+    // Floor
+    const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(22, 0.08, 22), floorMat);
+    floorMesh.position.y = -0.04;
+    floorMesh.receiveShadow = true;
+    scene.add(floorMesh);
+
+    const LEG_H  = 0.72;
+    const BODY_H = 0.40;
+
+    // ── Piano profiles (XY plane; profile-Y → world -Z after rotation.x = -PI/2) ──
+    // Outer D-shape (black lacquer rim walls)
+    function makeOuterShape() {
+      const s = new THREE.Shape();
+      s.moveTo(-1.5, 0);
+      s.lineTo( 1.5, 0);
+      s.bezierCurveTo( 2.26, 0,     2.60, 0.56,  2.50, 1.36);
+      s.bezierCurveTo( 2.40, 2.20,  1.90, 3.06,  1.10, 3.54);
+      s.bezierCurveTo( 0.38, 3.90, -0.46, 3.82, -0.98, 3.42);
+      s.bezierCurveTo(-1.58, 2.92, -1.92, 2.00, -1.92, 1.22);
+      s.bezierCurveTo(-1.92, 0.48, -1.72, 0.08, -1.5,  0);
+      return s;
+    }
+    // Inner cavity profile (inset ~0.16 from outer — defines open top and soundboard shape)
+    function makeInnerPath() {
+      const p = new THREE.Path();
+      p.moveTo(-1.34, 0.16);
+      p.lineTo( 1.34, 0.16);
+      p.bezierCurveTo( 2.02, 0.16,  2.32, 0.64,  2.22, 1.36);
+      p.bezierCurveTo( 2.12, 2.06,  1.68, 2.88,  0.92, 3.35);
+      p.bezierCurveTo( 0.24, 3.70, -0.32, 3.63, -0.80, 3.24);
+      p.bezierCurveTo(-1.36, 2.76, -1.62, 1.90, -1.62, 1.18);
+      p.bezierCurveTo(-1.62, 0.50, -1.46, 0.16, -1.34, 0.16);
+      return p;
+    }
+    // Same inner path as a Shape (for the soundboard flat fill)
+    function makeInnerShape() {
+      const s = new THREE.Shape();
+      s.moveTo(-1.34, 0.16);
+      s.lineTo( 1.34, 0.16);
+      s.bezierCurveTo( 2.02, 0.16,  2.32, 0.64,  2.22, 1.36);
+      s.bezierCurveTo( 2.12, 2.06,  1.68, 2.88,  0.92, 3.35);
+      s.bezierCurveTo( 0.24, 3.70, -0.32, 3.63, -0.80, 3.24);
+      s.bezierCurveTo(-1.36, 2.76, -1.62, 1.90, -1.62, 1.18);
+      s.bezierCurveTo(-1.62, 0.50, -1.46, 0.16, -1.34, 0.16);
+      return s;
+    }
+
+    // ── Hollow rim (outer shape - inner hole = just the walls) ──
+    const rimShape = makeOuterShape();
+    rimShape.holes.push(makeInnerPath());
+    const rimGeo = new THREE.ExtrudeGeometry(rimShape, { depth: BODY_H, bevelEnabled: false });
+    const rimMesh = new THREE.Mesh(rimGeo, pianoBodyMat);
+    rimMesh.rotation.x = -Math.PI / 2;
+    rimMesh.position.y = LEG_H;
+    rimMesh.castShadow = true;
+    rimMesh.receiveShadow = true;
+    group.add(rimMesh);
+
+    // ── Bottom plate (solid outer profile, thin, seals the underside) ──
+    const bottomPlateGeo = new THREE.ExtrudeGeometry(makeOuterShape(), { depth: 0.04, bevelEnabled: false });
+    const bottomPlate = new THREE.Mesh(bottomPlateGeo, pianoBodyMat);
+    bottomPlate.rotation.x = -Math.PI / 2;
+    bottomPlate.position.y = LEG_H - 0.02;
+    bottomPlate.receiveShadow = true;
+    group.add(bottomPlate);
+
+    // ── SOUNDBOARD (warm spruce — fills the inner cavity, visible from above) ──
+    // Lighter, warmer colour so it reads clearly under concert lighting
+    const spruceMat = new THREE.MeshStandardMaterial({
+      color: 0xd4944a, roughness: 0.72, metalness: 0.0,
+    });
+    const sbGeo = new THREE.ExtrudeGeometry(makeInnerShape(), { depth: 0.030, bevelEnabled: false });
+    const sbMesh = new THREE.Mesh(sbGeo, spruceMat);
+    sbMesh.rotation.x = -Math.PI / 2;
+    sbMesh.position.y = LEG_H + 0.010; // floor of the interior cavity
+    sbMesh.receiveShadow = true;
+    group.add(sbMesh);
+
+    // ── Soundboard grain lines (dark wood strips running bass→treble across grain) ──
+    // Interior Z axis: 0 = keyboard end, +Z = toward tail
+    const ribMat = new THREE.MeshStandardMaterial({ color: 0x6a3c12, roughness: 0.86, metalness: 0.0 });
+    // [centerX, centerZ, stripLength, yawAngle]
+    const ribData = [
+      [-0.90,  1.20,  2.20,  0.14],
+      [-0.35,  1.55,  2.50,  0.07],
+      [ 0.22,  1.75,  2.40, -0.02],
+      [ 0.78,  1.65,  2.10, -0.14],
+      [ 1.22,  1.35,  1.50, -0.30],
+      [ 1.52,  1.00,  0.90, -0.46],
+    ];
+    ribData.forEach(([rx, rz, rlen, rang]) => {
+      const rib = new THREE.Mesh(new THREE.BoxGeometry(0.030, 0.038, rlen), ribMat);
+      rib.position.set(rx, LEG_H + 0.058, rz);
+      rib.rotation.y = rang;
+      group.add(rib);
+    });
+
+    // ── Pin block / wrest plank (thick maple bar at the keyboard end) ──
+    const pinBlockMat = new THREE.MeshStandardMaterial({ color: 0x1a1210, roughness: 0.62, metalness: 0.04 });
+    const pinBlock = new THREE.Mesh(new THREE.BoxGeometry(3.10, 0.08, 0.30), pinBlockMat);
+    pinBlock.position.set(0, LEG_H + 0.055, 0.24); // just inside body from keyboard end
+    group.add(pinBlock);
+
+    // Tuning pin rows (brass cylinders projecting upward from pin block)
+    const pinMat = new THREE.MeshStandardMaterial({ color: 0xb89228, roughness: 0.10, metalness: 0.96 });
+    for (let i = 0; i < 22; i++) {
+      const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.010, 0.010, 0.060, 5), pinMat);
+      pin.position.set(-1.30 + i * 0.124, LEG_H + 0.092, 0.24);
+      group.add(pin);
+    }
+
+    // ── Cast-iron harp / plate (gold, spans pin block to mid-body) ──
+    const harpMat = new THREE.MeshStandardMaterial({
+      color: 0xc8961e, roughness: 0.18, metalness: 0.90, transparent: true, opacity: 0.78,
+    });
+    // Structural bars fan diagonally from pin block toward the tail
+    // [centerX, centerZ, barLength, yawAngle]
+    const harpBarData = [
+      [-1.18,  0.90,  2.60,  0.28],
+      [-0.42,  1.20,  2.80,  0.18],
+      [ 0.32,  1.45,  2.60,  0.08],
+      [ 1.00,  1.30,  2.00, -0.06],
+      [ 1.48,  1.00,  1.20, -0.22],
+    ];
+    harpBarData.forEach(([hx, hz, hlen, hang]) => {
+      const bar = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.028, hlen), harpMat);
+      bar.position.set(hx, LEG_H + 0.082, hz);
+      bar.rotation.y = hang;
+      group.add(bar);
+    });
+    // Harp cross-beam at the pin block end
+    const harpBeam = new THREE.Mesh(new THREE.BoxGeometry(2.85, 0.030, 0.075), harpMat);
+    harpBeam.position.set(0, LEG_H + 0.086, 0.30);
+    group.add(harpBeam);
+    // Harp outer ring (follows the curved rim inside)
+    const harpRing = new THREE.Mesh(new THREE.BoxGeometry(2.80, 0.024, 0.055), harpMat);
+    harpRing.position.set(0.18, LEG_H + 0.082, 2.50);
+    harpRing.rotation.y = -0.55;
+    group.add(harpRing);
+
+    // ── Strings (thin wires from pin block fanning toward the tail) ──
+    const stringMat = new THREE.MeshStandardMaterial({
+      color: 0xe0d0a0, roughness: 0.06, metalness: 0.96,
+    });
+    for (let i = 0; i < 32; i++) {
+      const sx = -1.42 + i * 0.092;
+      // Bass strings (left) are longer; treble strings (right) shorter
+      const strLen = 2.20 - Math.max(sx, 0) * 0.38 + Math.max(-sx, 0) * 0.18;
+      // Strings fan slightly: bass strings angle toward the tail-left corner
+      const strAngle = sx * 0.055;
+      const strGeo = new THREE.CylinderGeometry(0.0042, 0.0042, strLen, 4);
+      const str = new THREE.Mesh(strGeo, stringMat);
+      // Place string midpoint inside the body, starting from pin block (z≈0.30) going toward tail
+      str.position.set(sx, LEG_H + 0.098, 0.30 + strLen * 0.5);
+      str.rotation.x = Math.PI / 2; // lay flat (horizontal, running in Z)
+      str.rotation.z = strAngle;    // fan angle
+      group.add(str);
+    }
+
+    // ── Interior cavity light (illuminates soundboard, harp, strings from above) ──
+    const cavityLight = new THREE.PointLight(0xfff0d0, 3.8, 4.5);
+    cavityLight.position.set(0.1, LEG_H + BODY_H + 0.15, 1.60); // just above the open rim, mid-body
+    group.add(cavityLight);
+
+    // ── Keyboard area ──
+    const KBY = LEG_H + BODY_H;
+
+    // Keybed platform
+    const keybedMesh = new THREE.Mesh(new THREE.BoxGeometry(3.10, 0.07, 0.56), pianoInnerMat);
+    keybedMesh.position.set(0, KBY + 0.035, 0.28);
+    keybedMesh.receiveShadow = true;
+    group.add(keybedMesh);
+
+    // Front key slip (thin strip at front of keys)
+    const keySlip = new THREE.Mesh(new THREE.BoxGeometry(3.06, 0.06, 0.055), pianoBodyMat);
+    keySlip.position.set(0, KBY + 0.07, 0.53);
+    group.add(keySlip);
+
+    // White keys as individual planks (52 keys → use instanced look with block + dividers)
+    const WK_W = 2.82, WK_D = 0.46;
+    const whiteKeyBlock = new THREE.Mesh(new THREE.BoxGeometry(WK_W, 0.072, WK_D), keyWhiteMat);
+    whiteKeyBlock.position.set(0, KBY + 0.072, 0.30);
+    whiteKeyBlock.castShadow = true;
+    group.add(whiteKeyBlock);
+
+    // Key divider lines (subtle grooves)
+    const nWhite = 36;
+    const kw = WK_W / nWhite;
+    for (let i = 1; i < nWhite; i++) {
+      const d = new THREE.Mesh(new THREE.BoxGeometry(0.006, 0.074, WK_D - 0.018), keyBlackMat);
+      d.position.set(-WK_W / 2 + i * kw, KBY + 0.072, 0.29);
+      group.add(d);
+    }
+
+    // Black keys (correct 2-3 grouping, 5 octaves)
+    const bkOffsets = [1, 2, 4, 5, 6];
+    for (let oct = 0; oct < 5; oct++) {
+      bkOffsets.forEach(off => {
+        const bx = -WK_W / 2 + (oct * 7 + off) * kw - kw * 0.5 + kw * 0.04;
+        const bk = new THREE.Mesh(new THREE.BoxGeometry(kw * 0.58, 0.11, WK_D * 0.58), keyBlackMat);
+        bk.position.set(bx, KBY + 0.14, 0.14);
+        group.add(bk);
+      });
+    }
+
+    // Cheek blocks (left/right ends of keyboard)
+    [-1.56, 1.56].forEach(cx => {
+      const cheek = new THREE.Mesh(new THREE.BoxGeometry(0.065, 0.20, 0.58), pianoBodyMat);
+      cheek.position.set(cx, KBY + 0.10, 0.29);
+      group.add(cheek);
+    });
+
+    // Key cover / fallboard (closed, flat, sits over back of keys)
+    const fallboard = new THREE.Mesh(new THREE.BoxGeometry(2.96, 0.042, 0.22), pianoBodyMat);
+    fallboard.position.set(0, KBY + 0.20, -0.06);
+    group.add(fallboard);
+
+    // Nameboard (front panel above keyboard with decorative strip)
+    const nameboard = new THREE.Mesh(new THREE.BoxGeometry(2.96, 0.16, 0.04), pianoBodyMat);
+    nameboard.position.set(0, KBY + 0.14, -0.20);
+    group.add(nameboard);
+
+    // ── Music desk (angled sheet music stand) ──
+    const musicDeskMat = new THREE.MeshStandardMaterial({ color: 0x080706, roughness: 0.04, metalness: 0.88 });
+    const musicDesk = new THREE.Mesh(new THREE.BoxGeometry(1.90, 0.46, 0.040), musicDeskMat);
+    musicDesk.position.set(-0.06, KBY + 0.38, -0.22);
+    musicDesk.rotation.x = -0.26;
+    musicDesk.castShadow = true;
+    group.add(musicDesk);
+    // Desk ledge (bottom lip that holds sheet music)
+    const deskLedge = new THREE.Mesh(new THREE.BoxGeometry(1.90, 0.030, 0.08), musicDeskMat);
+    deskLedge.position.set(-0.06, KBY + 0.16, -0.15);
+    group.add(deskLedge);
+    // Support brackets
+    [-0.75, 0.75].forEach(bx => {
+      const brk = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.025, 0.28), musicDeskMat);
+      brk.position.set(bx, KBY + 0.22, -0.10);
+      brk.rotation.x = -0.26;
+      group.add(brk);
+    });
+
+    // ── Lid (open, propped — extruded from full outer profile) ──
+    const lidShape = makeOuterShape();
+    const lidGeo = new THREE.ExtrudeGeometry(lidShape, { depth: 0.048, bevelEnabled: false });
+    const lidPivot = new THREE.Group();
+    lidPivot.position.set(-0.20, LEG_H + BODY_H, 1.72);
+    group.add(lidPivot);
+    const lidMesh = new THREE.Mesh(lidGeo, pianoBodyMat);
+    lidMesh.rotation.x = -Math.PI / 2;
+    lidMesh.position.set(0.20, 0, -1.72);
+    lidMesh.castShadow = true;
+    lidPivot.add(lidMesh);
+    // Add warm inner face to lid underside
+    const lidInnerShape = makeInnerShape();
+    const lidInnerGeo = new THREE.ExtrudeGeometry(lidInnerShape, { depth: 0.006, bevelEnabled: false });
+    const lidInner = new THREE.Mesh(lidInnerGeo, new THREE.MeshStandardMaterial({ color: 0x9a6428, roughness: 0.80 }));
+    lidInner.rotation.x = -Math.PI / 2;
+    lidInner.position.set(0.20, 0.003, -1.72);
+    lidPivot.add(lidInner);
+    lidPivot.rotation.x = -Math.PI / 2 * 0.62; // open ~56°
+
+    // Lid prop stick
+    const propStick = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 1.18, 7), pianoBodyMat);
+    propStick.position.set(0.22, LEG_H + BODY_H + 0.50, -0.08);
+    propStick.rotation.z =  0.30;
+    propStick.rotation.x = -0.10;
+    group.add(propStick);
+
+    // ── Three tapered legs ──
+    const casterMat = new THREE.MeshStandardMaterial({ color: 0x282420, roughness: 0.4, metalness: 0.65 });
+    const legPositions = [[-1.10, 0.22], [1.10, 0.22], [-0.10, 3.06]];
+    legPositions.forEach(([lx, lz]) => {
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.062, 0.038, LEG_H, 12), pianoBodyMat);
+      leg.position.set(lx, LEG_H / 2, lz);
+      leg.castShadow = true;
+      group.add(leg);
+      const caster = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.065, 0.040, 10), casterMat);
+      caster.position.set(lx, 0.020, lz);
+      group.add(caster);
+    });
+
+    // ── Pedal lyre ──
+    const lyreMesh = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.42, 0.060), pianoBodyMat);
+    lyreMesh.position.set(0, 0.21, 0.52);
+    group.add(lyreMesh);
+    [-0.19, 0.19].forEach(px => {
+      const lyreleg = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.21, 6), pianoBodyMat);
+      lyreleg.position.set(px, 0.105, 0.58);
+      group.add(lyreleg);
+    });
+    [-0.16, 0, 0.16].forEach(px => {
+      const pedal = new THREE.Mesh(new THREE.BoxGeometry(0.092, 0.040, 0.18), pedalMat);
+      pedal.position.set(px, 0.090, 0.56);
+      pedal.rotation.x = 0.22;
+      group.add(pedal);
+    });
+
+    // ── Piano bench ──
+    const benchGroup = new THREE.Group();
+    benchGroup.position.set(0.06, 0, 1.68);
+    group.add(benchGroup);
+
+    // Bench top cushion (two-layer for slight volume)
+    const benchTopMesh = new THREE.Mesh(
+      new THREE.BoxGeometry(1.04, 0.095, 0.46), benchCushionMat
+    );
+    benchTopMesh.position.y = 0.50;
+    benchTopMesh.castShadow = true;
+    benchGroup.add(benchTopMesh);
+
+    const cushionInner = new THREE.Mesh(
+      new THREE.BoxGeometry(0.94, 0.06, 0.37),
+      new THREE.MeshStandardMaterial({ color: 0x221b16, roughness: 0.92 })
+    );
+    cushionInner.position.y = 0.53;
+    benchGroup.add(cushionInner);
+
+    // Bench legs (4 tapered)
+    [[-0.42,-0.17],[0.42,-0.17],[-0.42,0.17],[0.42,0.17]].forEach(([lx,lz]) => {
+      const bl = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.030, 0.020, 0.45, 8), pianoBodyMat
+      );
+      bl.position.set(lx, 0.225, lz);
+      bl.castShadow = true;
+      benchGroup.add(bl);
+    });
+
+    // Bench stretcher bar
+    const stretcherBar = new THREE.Mesh(new THREE.BoxGeometry(0.84, 0.022, 0.022), pianoBodyMat);
+    stretcherBar.position.set(0, 0.19, 0);
+    benchGroup.add(stretcherBar);
+
+    // ── Lighting ──
+
+    // Ambient — near-black
+    scene.add(new THREE.AmbientLight(0x0e0c10, 0.45));
+
+    // Main stage spotlight (warm, from above-front-right)
+    const spotLight = new THREE.SpotLight(0xffe8c0, 9.5, 16, Math.PI * 0.19, 0.38, 1.4);
+    spotLight.position.set(2.2, 7.0, 4.0);
+    spotLight.target.position.set(0, 1.2, 1.0);
+    spotLight.castShadow = true;
+    spotLight.shadow.mapSize.set(1024, 1024);
+    scene.add(spotLight);
+    scene.add(spotLight.target);
+
+    // Cool blue rim from upper-back-left (moonlight / window)
+    const rimLight = new THREE.DirectionalLight(0x304868, 1.05);
+    rimLight.position.set(-5, 7, -4);
+    rimLight.castShadow = true;
+    rimLight.shadow.mapSize.set(1024, 1024);
+    scene.add(rimLight);
+
+    // Warm amber bounce off floor
+    const fillLight = new THREE.PointLight(0xff8830, 1.6, 7);
+    fillLight.position.set(-2.2, 0.4, 2.5);
+    scene.add(fillLight);
+
+    // Soundboard cavity warm glow — makes the spruce wood luminous from inside
+    const cavityGlow = new THREE.PointLight(0xffa840, 2.2, 3.5);
+    cavityGlow.position.set(0, LEG_H + 0.22, -0.8);
+    group.add(cavityGlow);
+
+    // Second cavity glow deeper in the body (tail area)
+    const cavityGlow2 = new THREE.PointLight(0xff8820, 1.4, 2.8);
+    cavityGlow2.position.set(-0.4, LEG_H + 0.18, -1.8);
+    group.add(cavityGlow2);
+
+    // Keyboard well glow
+    const interiorLight = new THREE.PointLight(0xffd090, 1.4, 2.8);
+    interiorLight.position.set(0, KBY + 0.18, 0.3);
+    group.add(interiorLight);
+
+    // Lid underside warm bounce
+    const lidBounce = new THREE.PointLight(0xffb050, 0.9, 3.2);
+    lidBounce.position.set(-0.2, KBY + 1.1, 0.5);
+    group.add(lidBounce);
+
+    // ── Floor reflection quad (fake) ──
+    const reflectGeo = new THREE.PlaneGeometry(10, 10);
+    const reflectMat = new THREE.MeshStandardMaterial({
+      color: 0x080806,
+      roughness: 0.02,
+      metalness: 0.95,
+      transparent: true,
+      opacity: 0.7,
+    });
+    const reflect = new THREE.Mesh(reflectGeo, reflectMat);
+    reflect.rotation.x = -Math.PI / 2;
+    reflect.position.y = 0.001;
+    reflect.receiveShadow = true;
+    scene.add(reflect);
+
+    // ── Particles / dust ──
+    const particleCount = 220;
+    const particleGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i*3]   = (Math.random() - 0.5) * 12;
+      positions[i*3+1] = Math.random() * 4;
+      positions[i*3+2] = (Math.random() - 0.5) * 12;
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleMat = new THREE.PointsMaterial({
+      size: 0.015,
+      color: 0xffd090,
+      transparent: true,
+      opacity: 0.5,
+      sizeAttenuation: true,
+    });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+
+    // ── Camera target & smooth tracking ──
+    const camTarget = new THREE.Vector3(5.5, 4.5, 9);
+    const camLook = new THREE.Vector3(0, 0.5, 0);
+
+    // ── Resize ──
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // ── Loader simulation ──
+    let progress = 0;
+    const loaderBar = document.getElementById('loader-bar');
+    const loaderPct = document.getElementById('loader-pct');
+    const loader = document.getElementById('loader');
+
+    const loadInterval = setInterval(() => {
+      progress += Math.random() * 18;
+      if (progress >= 100) { progress = 100; clearInterval(loadInterval); revealUI(); }
+      loaderBar.style.width = progress + '%';
+      loaderPct.textContent = Math.floor(progress) + '%';
+    }, 120);
+
+    function revealUI() {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        document.querySelectorAll('.reveal').forEach((el, i) => {
+          setTimeout(() => el.classList.add('in'), i * 80);
+        });
+      }, 400);
+    }
+
+    // ── Animate ──
+    let time = 0;
+    let camX = 4.8, camY = 4.2, camZ = 8.5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 0.007;
+
+      // Gentle model float
+      group.position.y = Math.sin(time * 0.55) * 0.035;
+      group.rotation.y = Math.sin(time * 0.22) * 0.05 + mouseX * 0.10;
+
+      // Particle drift
+      particles.rotation.y = time * 0.04;
+      const pPos = particles.geometry.attributes.position.array;
+      for (let i = 0; i < particleCount; i++) {
+        pPos[i*3+1] += 0.002;
+        if (pPos[i*3+1] > 4) pPos[i*3+1] = 0;
+      }
+      particles.geometry.attributes.position.needsUpdate = true;
+
+      // Keyboard glow shimmer
+      interiorLight.intensity = 1.4 + Math.sin(time * 2.1) * 0.08 + Math.sin(time * 5.3) * 0.03;
+
+      // Camera smooth parallax
+      const targetX = 4.8 + mouseX * 0.55;
+      const targetY = 4.2 - mouseY * 0.35;
+      const targetZ = 8.5 + mouseY * 0.18;
+      camX += (targetX - camX) * 0.04;
+      camY += (targetY - camY) * 0.04;
+      camZ += (targetZ - camZ) * 0.04;
+      camera.position.set(camX, camY, camZ);
+      camera.lookAt(mouseX * 0.25, 1.0 - mouseY * 0.15, 1.2);
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // ── Panel navigation ──
+    function openPanel(id) {
+      document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+      const panel = document.getElementById('panel-' + id);
+      if (panel) {
+        panel.classList.add('active');
+        panel.scrollTop = 0;
+      }
+    }
+    function closeAllPanels() {
+      document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+    }
+
+    // Nav links and CTAs with data-panel attribute
+    document.querySelectorAll('[data-panel]').forEach(el => {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        openPanel(el.dataset.panel);
+      });
+    });
+
+    // Close buttons
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', () => closeAllPanels());
+    });
+
+    // LM logo returns to hero
+    document.getElementById('nav-home').addEventListener('click', e => {
+      e.preventDefault();
+      closeAllPanels();
+    });
+
+    // Esc key closes panels
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeAllPanels();
+    });
+
+  })();
+  </script>
+
+
+</body></html>
