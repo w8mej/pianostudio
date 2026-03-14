@@ -13,7 +13,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #08091a;           /* deep midnight indigo — separates from black piano */
+      --black: #0d0b0a;           /* warm obsidian — studio background */
       --white: #f0ece4;           /* warm ivory — harmonizes with keys */
       --warm:  #b8892a;           /* darker gold for secondary use */
       --accent: #d4a830;          /* rich gold italic text */
@@ -1010,11 +1010,10 @@
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
-    renderer.setClearColor(0x08091a);  // midnight indigo
-
+    renderer.setClearColor(0x0d0b0a);  // warm obsidian
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x08091a);  // midnight indigo
-    scene.fog = new THREE.FogExp2(0x08091a, 0.014);
+    scene.background = new THREE.Color(0x0d0b0a);
+    scene.fog = new THREE.FogExp2(0x0d0b0a, 0.015);
 
     // ── Environment map — gives the lacquer real mirror reflections ──
     const pmrem = new THREE.PMREMGenerator(renderer);
@@ -1089,9 +1088,9 @@
     const pedalMat = new THREE.MeshStandardMaterial({
       color: 0xd4a818, roughness: 0.04, metalness: 0.98, envMapIntensity: 4.5,
     });
-    // Concert stage floor — polished ebony
+    // Concert stage floor — polished walnut
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x010101, roughness: 0.008, metalness: 0.94, envMapIntensity: 3.0,
+      color: 0x1a140f, roughness: 0.04, metalness: 0.94, envMapIntensity: 3.0,
     });
     // Bench cushion — dark burgundy leather
     const cushionMat = new THREE.MeshStandardMaterial({
