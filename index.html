@@ -13,7 +13,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #0d0b0a;           /* warm obsidian — studio background */
+      --black: #1c1d1f;           /* deep mineral grey — studio background */
       --white: #f0ece4;           /* warm ivory — harmonizes with keys */
       --warm:  #b8892a;           /* darker gold for secondary use */
       --accent: #d4a830;          /* rich gold italic text */
@@ -1010,10 +1010,10 @@
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
-    renderer.setClearColor(0x0d0b0a);  // warm obsidian
+    renderer.setClearColor(0x1c1d1f);  // deep mineral grey
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0d0b0a);
-    scene.fog = new THREE.FogExp2(0x0d0b0a, 0.015);
+    scene.background = new THREE.Color(0x1c1d1f);
+    scene.fog = new THREE.FogExp2(0x1c1d1f, 0.015);
 
     // ── Environment map — gives the lacquer real mirror reflections ──
     const pmrem = new THREE.PMREMGenerator(renderer);
