@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<!-- saved from url=(0044)file:///Users/solidus/Downloads/index_4.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lisa Menerick Piano Studio — Master Pedagogue</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com/">
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="./beta_files/css2" rel="stylesheet">
-  <script src="./beta_files/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Geist+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #080806;
-      --white: #f2ede8;
-      --warm: #c8975a;
-      --accent: #d4a96a;
-      --muted: rgba(242,237,232,0.45);
+      --black: #08091a;           /* deep midnight indigo — separates from black piano */
+      --white: #f0ece4;           /* warm ivory — harmonizes with keys */
+      --warm:  #b8892a;           /* darker gold for secondary use */
+      --accent: #d4a830;          /* rich gold italic text */
+      --cta:   #e8c84a;           /* vivid champagne gold — the CTA color */
+      --cta-glow: rgba(232,200,74,0.45);
+      --muted: rgba(240,236,228,0.40);
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-mono: 'Geist Mono', 'Courier New', monospace;
     }
@@ -121,18 +123,18 @@
 
     .nav-cta {
       font-size: 10px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--cta);
       text-decoration: none;
-      border-bottom: 1px solid rgba(242,237,232,0.3);
+      border-bottom: 1px solid rgba(232,200,74,0.4);
       padding-bottom: 2px;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: border-color 0.2s;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .nav-cta:hover { border-color: var(--white); }
+    .nav-cta:hover { color: #f5da70; border-color: var(--cta); }
     .nav-cta svg { width: 12px; height: 12px; }
 
     /* ── Hero text ── */
@@ -192,25 +194,33 @@
       gap: 24px;
     }
 
+    /* ── CTA pulse glow keyframes ── */
+    @keyframes ctaGlow {
+      0%, 100% { box-shadow: 0 0 16px 2px var(--cta-glow), 0 0 40px 6px rgba(232,200,74,0.15); }
+      50%       { box-shadow: 0 0 28px 6px var(--cta-glow), 0 0 64px 14px rgba(232,200,74,0.28); }
+    }
+
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 28px;
-      background: var(--white);
-      color: var(--black);
+      padding: 15px 32px;
+      background: var(--cta);
+      color: #0d0e1c;             /* very dark navy — maximum contrast on gold */
       font-family: var(--font-mono);
       font-size: 10px;
-      letter-spacing: 0.12em;
+      font-weight: 400;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       text-decoration: none;
       border: none;
       cursor: none;
-      transition: background 0.2s, color 0.2s;
+      animation: ctaGlow 2.6s ease-in-out infinite;
+      transition: background 0.25s, transform 0.18s;
     }
     .btn-primary:hover {
-      background: var(--warm);
-      color: var(--black);
+      background: #f5da70;        /* lighter gold on hover */
+      transform: translateY(-2px);
     }
     .btn-primary svg { width: 12px; height: 12px; }
 
@@ -649,62 +659,62 @@
 <body>
 
   <!-- Loader -->
-  <div id="loader" class="hidden">
+  <div id="loader">
     <div class="loader-logo">Menerick Piano Studio</div>
-    <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar" style="width: 100%;"></div></div>
-    <div class="loader-pct" id="loader-pct">100%</div>
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+    <div class="loader-pct" id="loader-pct">0%</div>
   </div>
 
   <!-- Custom cursor -->
-  <div id="cursor" style="left: 530px; top: 354px;"></div>
-  <div id="cursor-ring" style="left: 1109.92px; top: 549.36px;"></div>
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
 
   <!-- Three.js canvas -->
-  <canvas id="canvas" width="2400" height="1634" style="width: 1200px; height: 817px;"></canvas>
+  <canvas id="canvas"></canvas>
 
   <!-- UI -->
   <div id="ui">
     <nav>
       <div class="nav-left">
-        <a href="file:///Users/solidus/Downloads/index_4.html#" class="logo-mark" id="nav-home">LM</a>
+        <a href="#" class="logo-mark" id="nav-home">LM</a>
         <ul class="nav-links">
-          <li><a href="file:///Users/solidus/Downloads/index_4.html#" data-panel="pedagogy">Pedagogy</a></li>
-          <li><a href="file:///Users/solidus/Downloads/index_4.html#" data-panel="programs">Programs</a></li>
-          <li><a href="file:///Users/solidus/Downloads/index_4.html#" data-panel="admissions">Admissions</a></li>
+          <li><a href="#" data-panel="pedagogy">Pedagogy</a></li>
+          <li><a href="#" data-panel="programs">Programs</a></li>
+          <li><a href="#" data-panel="admissions">Admissions</a></li>
         </ul>
       </div>
-      <a href="file:///Users/solidus/Downloads/index_4.html#" class="nav-cta" data-panel="admissions">
+      <a href="#" class="nav-cta" data-panel="admissions">
         Request a Consultation
         <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M2 10L10 2M10 2H4M10 2v6"></path>
+          <path d="M2 10L10 2M10 2H4M10 2v6"/>
         </svg>
       </a>
     </nav>
 
     <div class="hero">
-      <div class="hero-tag reveal in">Master Pedagogue &nbsp;·&nbsp; Est. 1984</div>
-      <h1 class="reveal in" style="transition-delay:0.1s">
+      <div class="hero-tag reveal">Master Pedagogue &nbsp;·&nbsp; Est. 1984</div>
+      <h1 class="reveal" style="transition-delay:0.1s">
         Where discipline<br>
         becomes <em>artistry,</em><br>
         and children flourish.
       </h1>
-      <p class="hero-sub reveal in" style="transition-delay:0.2s">
+      <p class="hero-sub reveal" style="transition-delay:0.2s">
         Forty years of classical instruction, character formation, and musical mastery — guided by one unwavering standard of excellence.
       </p>
-      <div class="cta-row reveal in" style="transition-delay:0.3s">
-        <a href="file:///Users/solidus/Downloads/index_4.html#" class="btn-primary" data-panel="admissions">
+      <div class="cta-row reveal" style="transition-delay:0.3s">
+        <a href="#" class="btn-primary" data-panel="admissions">
           Request a Consultation
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M2 10L10 2M10 2H4M10 2v6"></path>
+            <path d="M2 10L10 2M10 2H4M10 2v6"/>
           </svg>
         </a>
-        <a href="file:///Users/solidus/Downloads/index_4.html#" class="btn-ghost" data-panel="pedagogy">Our Approach</a>
+        <a href="#" class="btn-ghost" data-panel="pedagogy">Our Approach</a>
       </div>
     </div>
   </div>
 
   <!-- Stats -->
-  <div class="stats reveal in" style="transition-delay:0.5s">
+  <div class="stats reveal" style="transition-delay:0.5s">
     <div class="stat">
       <div class="stat-num">40+</div>
       <div class="stat-label">Years of instruction</div>
@@ -725,7 +735,7 @@
        PANEL 1 · PEDAGOGY
   ════════════════════════════════════════════════ -->
   <div class="content-panel" id="panel-pedagogy">
-    <button class="panel-close" data-close="">Close</button>
+    <button class="panel-close" data-close>Close</button>
     <div class="panel-inner">
 
       <div class="panel-eyebrow">Philosophy of Instruction</div>
@@ -779,7 +789,7 @@
        PANEL 2 · PROGRAMS
   ════════════════════════════════════════════════ -->
   <div class="content-panel" id="panel-programs">
-    <button class="panel-close" data-close="">Close</button>
+    <button class="panel-close" data-close>Close</button>
     <div class="panel-inner">
 
       <div class="panel-eyebrow">Studio Curriculum</div>
@@ -832,7 +842,7 @@
        PANEL 3 · ADMISSIONS
   ════════════════════════════════════════════════ -->
   <div class="content-panel" id="panel-admissions">
-    <button class="panel-close" data-close="">Close</button>
+    <button class="panel-close" data-close>Close</button>
     <div class="panel-inner">
 
       <div class="panel-eyebrow">Studio Enrollment</div>
@@ -879,11 +889,11 @@
       <div class="cta-block">
         <div class="cta-block-label">Begin Your Inquiry</div>
         <div class="cta-options">
-          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt primary">Request a Consultation</a>
-          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt">Schedule an Introduction</a>
-          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt">Inquire About Enrollment</a>
-          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt">Apply for Placement</a>
-          <a href="file:///Users/solidus/Downloads/index_4.html#" class="cta-opt">Arrange a Studio Visit</a>
+          <a href="#" class="cta-opt primary">Request a Consultation</a>
+          <a href="#" class="cta-opt">Schedule an Introduction</a>
+          <a href="#" class="cta-opt">Inquire About Enrollment</a>
+          <a href="#" class="cta-opt">Apply for Placement</a>
+          <a href="#" class="cta-opt">Arrange a Studio Visit</a>
         </div>
       </div>
 
@@ -957,7 +967,33 @@
     }
     animRing();
 
-    // ── Mouse tracking for 3D parallax ──
+    // ── Loader animation ──
+    const loaderEl  = document.getElementById('loader');
+    const loaderBar = document.getElementById('loader-bar');
+    const loaderPct = document.getElementById('loader-pct');
+    let pct = 0;
+    const loaderTick = setInterval(() => {
+      // Accelerate to 80% quickly, then slow down waiting for first render
+      pct += pct < 80 ? (Math.random() * 14 + 4) : (Math.random() * 2 + 0.5);
+      if (pct >= 100) {
+        pct = 100;
+        clearInterval(loaderTick);
+        loaderBar.style.width = '100%';
+        loaderPct.textContent = '100%';
+        setTimeout(() => {
+          loaderEl.classList.add('hidden');
+          // Trigger reveal animations
+          document.querySelectorAll('.reveal').forEach((el, i) => {
+            setTimeout(() => el.classList.add('in'), i * 80);
+          });
+        }, 320);
+      } else {
+        loaderBar.style.width = Math.min(pct, 100) + '%';
+        loaderPct.textContent = Math.floor(pct) + '%';
+      }
+    }, 80);
+
+
     let mouseX = 0, mouseY = 0;
     document.addEventListener('mousemove', e => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -973,460 +1009,488 @@
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.9;
-    renderer.setClearColor(0x060504);
+    renderer.toneMappingExposure = 1.15;
+    renderer.setClearColor(0x08091a);  // midnight indigo
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060504, 0.026);
+    scene.background = new THREE.Color(0x08091a);  // midnight indigo
+    scene.fog = new THREE.FogExp2(0x08091a, 0.014);
 
-    // Camera
-    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(4.8, 4.2, 8.5);
-    camera.lookAt(0, 1.0, 1.2);
+    // ── Environment map — gives the lacquer real mirror reflections ──
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    pmrem.compileCubemapShader();
+    const envScene = new THREE.Scene();
+    const envHull = new THREE.Mesh(
+      new THREE.SphereGeometry(80, 16, 16),
+      new THREE.MeshBasicMaterial({ color: 0x030210, side: THREE.BackSide })
+    );
+    envScene.add(envHull);
+    // Hot spots that reflect on the lacquer surface
+    [
+      [10,  22,  6,  0xfff2d0, 4.0],   // warm key light
+      [-14,  8, -12, 0x1828c0, 2.2],   // cool blue rim
+      [  0, -5,  4,  0xff7820, 1.4],   // amber floor bounce
+      [  6, 10, -8,  0xffffff, 0.9],   // secondary highlight
+      [ -4, 14,  2,  0xd0e0ff, 1.2],   // soft overhead fill
+    ].forEach(([x, y, z, col, r]) => {
+      const m = new THREE.Mesh(
+        new THREE.SphereGeometry(r, 6, 6),
+        new THREE.MeshBasicMaterial({ color: col })
+      );
+      m.position.set(x, y, z);
+      envScene.add(m);
+    });
+    const envMap = pmrem.fromScene(envScene, 0, 0.1, 100).texture;
+    scene.environment = envMap;
+    pmrem.dispose();
+
+    // Camera — lower, theatrical "audience" angle
+    const camera = new THREE.PerspectiveCamera(36, window.innerWidth / window.innerHeight, 0.1, 120);
+    camera.position.set(3.6, 2.9, 7.6);
+    camera.lookAt(0.1, 1.3, 0.8);
 
     // ── Materials ──
-    const pianoBodyMat = new THREE.MeshStandardMaterial({
-      color: 0x060504, roughness: 0.025, metalness: 0.88,
+    // Mirror-black lacquer — the soul of a concert grand
+    const lacquerMat = new THREE.MeshStandardMaterial({
+      color: 0x040304, roughness: 0.008, metalness: 0.96, envMapIntensity: 4.5,
     });
-    const pianoInnerMat = new THREE.MeshStandardMaterial({
-      color: 0x2e1e0e, roughness: 0.88, metalness: 0.0,
+    const lacquerInnerMat = new THREE.MeshStandardMaterial({
+      color: 0x070508, roughness: 0.04,  metalness: 0.88, envMapIntensity: 3.0,
     });
+    // Spruce soundboard
+    const spruceMat = new THREE.MeshStandardMaterial({
+      color: 0xe09830, roughness: 0.65, metalness: 0.0, envMapIntensity: 0.3,
+    });
+    // Interior dark wood
+    const rimWoodMat = new THREE.MeshStandardMaterial({
+      color: 0x1a0c05, roughness: 0.80, metalness: 0.0,
+    });
+    // Cast-iron harp / plate (gold)
+    const harpMat = new THREE.MeshStandardMaterial({
+      color: 0xc08808, roughness: 0.10, metalness: 0.97, envMapIntensity: 4.0,
+    });
+    // Steel strings
+    const stringMat = new THREE.MeshStandardMaterial({
+      color: 0xe8dca0, roughness: 0.04, metalness: 1.0, envMapIntensity: 3.0,
+    });
+    // Steel tuning pins
+    const pinMat = new THREE.MeshStandardMaterial({
+      color: 0x888888, roughness: 0.20, metalness: 0.96,
+    });
+    // Ivory keys
     const keyWhiteMat = new THREE.MeshStandardMaterial({
-      color: 0xece8e0, roughness: 0.25, metalness: 0.0,
+      color: 0xf0ece2, roughness: 0.26, metalness: 0.01, envMapIntensity: 0.6,
     });
+    // Ebony keys
     const keyBlackMat = new THREE.MeshStandardMaterial({
-      color: 0x080706, roughness: 0.08, metalness: 0.5,
+      color: 0x050404, roughness: 0.05, metalness: 0.60, envMapIntensity: 2.5,
     });
+    // Brass pedals
     const pedalMat = new THREE.MeshStandardMaterial({
-      color: 0xc8a428, roughness: 0.05, metalness: 0.96,
+      color: 0xd4a818, roughness: 0.04, metalness: 0.98, envMapIntensity: 4.5,
     });
-    const benchCushionMat = new THREE.MeshStandardMaterial({
-      color: 0x181210, roughness: 0.88, metalness: 0.0,
-    });
+    // Concert stage floor — polished ebony
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x0d0a08, roughness: 0.03, metalness: 0.85,
+      color: 0x010101, roughness: 0.008, metalness: 0.94, envMapIntensity: 3.0,
+    });
+    // Bench cushion — dark burgundy leather
+    const cushionMat = new THREE.MeshStandardMaterial({
+      color: 0x180508, roughness: 0.78, metalness: 0.0,
+    });
+    // Rib wood
+    const ribMat = new THREE.MeshStandardMaterial({
+      color: 0x6a3c0e, roughness: 0.86, metalness: 0.0,
+    });
+    // Pin block
+    const pinBlockMat = new THREE.MeshStandardMaterial({
+      color: 0x0e0a08, roughness: 0.60, metalness: 0.04,
     });
 
-    // ── Build piano model ──
+    // ── Lighting — Carnegie Hall drama ──
+    scene.add(new THREE.AmbientLight(0x04030c, 0.35));
+
+    // Primary stage key light (upper front-right) — hard concert spot
+    const keyLight = new THREE.SpotLight(0xfff4dc, 30, 28, Math.PI * 0.11, 0.35, 1.4);
+    keyLight.position.set(4.5, 10.5, 6.5);
+    keyLight.target.position.set(0.2, 1.1, 0.4);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width  = 2048;
+    keyLight.shadow.mapSize.height = 2048;
+    keyLight.shadow.camera.near = 2;
+    keyLight.shadow.camera.far  = 30;
+    keyLight.shadow.bias = -0.001;
+    scene.add(keyLight);
+    scene.add(keyLight.target);
+
+    // Secondary fill — softens keyboard-area shadow
+    const fillLight = new THREE.SpotLight(0xffeedd, 4.5, 18, Math.PI * 0.22, 0.9, 2);
+    fillLight.position.set(-2.5, 6, 5.5);
+    fillLight.target.position.set(0, 1.0, 0.4);
+    scene.add(fillLight);
+    scene.add(fillLight.target);
+
+    // Cool blue rim / back — concert silhouette halo
+    const rimLight = new THREE.DirectionalLight(0x1020b8, 3.5);
+    rimLight.position.set(-10, 8, -8);
+    rimLight.target.position.set(0, 1, 0);
+    scene.add(rimLight);
+    scene.add(rimLight.target);
+
+    // High back — rakes across the open lid top
+    const highBack = new THREE.SpotLight(0x7888c8, 3.5, 22, Math.PI * 0.14, 0.7, 1.8);
+    highBack.position.set(-6, 13, -7);
+    highBack.target.position.set(0, 1.5, 0.5);
+    scene.add(highBack);
+    scene.add(highBack.target);
+
+    // Warm amber floor bounce
+    const bounceLight = new THREE.PointLight(0xff8818, 3.2, 8);
+    bounceLight.position.set(-1.8, 0.25, 2.5);
+    scene.add(bounceLight);
+
+    // Interior cavity — lit separately, animated
+    let cavityLight = new THREE.PointLight(0xffb030, 8, 5.5);
+    // position set after constants defined below
+
+    // ── Constants ──
+    const LEG_H  = 0.72;
+    const BODY_H = 0.42;
+
+    cavityLight.position.set(0.1, LEG_H + BODY_H + 0.14, -1.55);
+    scene.add(cavityLight);
+
+    // ── Concert grand profile shapes ──
+    // Top-view silhouette: X = width, Y = depth (Y=0 = keyboard, Y→tail)
+    // Accurate Steinway D proportions: ~3.64 wide × 3.70 deep in these units
+    function makeOuterShape() {
+      const s = new THREE.Shape();
+      s.moveTo(-1.32, 0);
+      s.lineTo( 1.32, 0);
+      // Treble (right) side — nearly straight
+      s.bezierCurveTo( 1.62, 0.00,  1.82, 0.28,  1.82, 0.82);
+      s.bezierCurveTo( 1.82, 1.58,  1.64, 2.38,  1.20, 2.98);
+      // Tail — rounded point
+      s.bezierCurveTo( 0.76, 3.48,  0.20, 3.70,  0.00, 3.72);
+      s.bezierCurveTo(-0.20, 3.70, -0.56, 3.54, -0.92, 3.20);
+      // Bass (left) side — the famous sweeping curve
+      s.bezierCurveTo(-1.48, 2.70, -1.78, 1.96, -1.78, 1.14);
+      s.bezierCurveTo(-1.78, 0.42, -1.58, 0.06, -1.32, 0.00);
+      return s;
+    }
+    function makeInnerPath() {
+      const k = 0.14; // inset
+      const p = new THREE.Path();
+      p.moveTo(-1.32 + k, k);
+      p.lineTo( 1.32 - k, k);
+      p.bezierCurveTo( 1.46, k,     1.60, 0.34,  1.60, 0.84);
+      p.bezierCurveTo( 1.60, 1.56,  1.44, 2.32,  1.04, 2.86);
+      p.bezierCurveTo( 0.62, 3.30,  0.14, 3.50,  0.00, 3.52);
+      p.bezierCurveTo(-0.14, 3.50, -0.48, 3.36, -0.80, 3.04);
+      p.bezierCurveTo(-1.30, 2.56, -1.56, 1.88, -1.56, 1.12);
+      p.bezierCurveTo(-1.56, 0.44, -1.40, k,    -1.32 + k, k);
+      return p;
+    }
+    function makeInnerShape() {
+      const k = 0.14;
+      const s = new THREE.Shape();
+      s.moveTo(-1.32 + k, k);
+      s.lineTo( 1.32 - k, k);
+      s.bezierCurveTo( 1.46, k,     1.60, 0.34,  1.60, 0.84);
+      s.bezierCurveTo( 1.60, 1.56,  1.44, 2.32,  1.04, 2.86);
+      s.bezierCurveTo( 0.62, 3.30,  0.14, 3.50,  0.00, 3.52);
+      s.bezierCurveTo(-0.14, 3.50, -0.48, 3.36, -0.80, 3.04);
+      s.bezierCurveTo(-1.30, 2.56, -1.56, 1.88, -1.56, 1.12);
+      s.bezierCurveTo(-1.56, 0.44, -1.40, k,    -1.32 + k, k);
+      return s;
+    }
+
+    // ── Piano group (slight turn to reveal bass curve) ──
     const group = new THREE.Group();
+    group.rotation.y = 0.12;
     scene.add(group);
 
-    // Floor
-    const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(22, 0.08, 22), floorMat);
-    floorMesh.position.y = -0.04;
+    // Stage floor — polished ebony concert platform
+    const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(28, 0.055, 28), floorMat);
+    floorMesh.position.y = -0.027;
     floorMesh.receiveShadow = true;
     scene.add(floorMesh);
 
-    const LEG_H  = 0.72;
-    const BODY_H = 0.40;
-
-    // ── Piano profiles (XY plane; profile-Y → world -Z after rotation.x = -PI/2) ──
-    // Outer D-shape (black lacquer rim walls)
-    function makeOuterShape() {
-      const s = new THREE.Shape();
-      s.moveTo(-1.5, 0);
-      s.lineTo( 1.5, 0);
-      s.bezierCurveTo( 2.26, 0,     2.60, 0.56,  2.50, 1.36);
-      s.bezierCurveTo( 2.40, 2.20,  1.90, 3.06,  1.10, 3.54);
-      s.bezierCurveTo( 0.38, 3.90, -0.46, 3.82, -0.98, 3.42);
-      s.bezierCurveTo(-1.58, 2.92, -1.92, 2.00, -1.92, 1.22);
-      s.bezierCurveTo(-1.92, 0.48, -1.72, 0.08, -1.5,  0);
-      return s;
-    }
-    // Inner cavity profile (inset ~0.16 from outer — defines open top and soundboard shape)
-    function makeInnerPath() {
-      const p = new THREE.Path();
-      p.moveTo(-1.34, 0.16);
-      p.lineTo( 1.34, 0.16);
-      p.bezierCurveTo( 2.02, 0.16,  2.32, 0.64,  2.22, 1.36);
-      p.bezierCurveTo( 2.12, 2.06,  1.68, 2.88,  0.92, 3.35);
-      p.bezierCurveTo( 0.24, 3.70, -0.32, 3.63, -0.80, 3.24);
-      p.bezierCurveTo(-1.36, 2.76, -1.62, 1.90, -1.62, 1.18);
-      p.bezierCurveTo(-1.62, 0.50, -1.46, 0.16, -1.34, 0.16);
-      return p;
-    }
-    // Same inner path as a Shape (for the soundboard flat fill)
-    function makeInnerShape() {
-      const s = new THREE.Shape();
-      s.moveTo(-1.34, 0.16);
-      s.lineTo( 1.34, 0.16);
-      s.bezierCurveTo( 2.02, 0.16,  2.32, 0.64,  2.22, 1.36);
-      s.bezierCurveTo( 2.12, 2.06,  1.68, 2.88,  0.92, 3.35);
-      s.bezierCurveTo( 0.24, 3.70, -0.32, 3.63, -0.80, 3.24);
-      s.bezierCurveTo(-1.36, 2.76, -1.62, 1.90, -1.62, 1.18);
-      s.bezierCurveTo(-1.62, 0.50, -1.46, 0.16, -1.34, 0.16);
-      return s;
-    }
-
-    // ── Hollow rim (outer shape - inner hole = just the walls) ──
+    // ── RIM (hollow outer profile = just the walls) ──
     const rimShape = makeOuterShape();
     rimShape.holes.push(makeInnerPath());
     const rimGeo = new THREE.ExtrudeGeometry(rimShape, { depth: BODY_H, bevelEnabled: false });
-    const rimMesh = new THREE.Mesh(rimGeo, pianoBodyMat);
+    const rimMesh = new THREE.Mesh(rimGeo, lacquerMat);
     rimMesh.rotation.x = -Math.PI / 2;
     rimMesh.position.y = LEG_H;
     rimMesh.castShadow = true;
     rimMesh.receiveShadow = true;
     group.add(rimMesh);
 
-    // ── Bottom plate (solid outer profile, thin, seals the underside) ──
-    const bottomPlateGeo = new THREE.ExtrudeGeometry(makeOuterShape(), { depth: 0.04, bevelEnabled: false });
-    const bottomPlate = new THREE.Mesh(bottomPlateGeo, pianoBodyMat);
+    // Bottom plate
+    const bottomGeo = new THREE.ExtrudeGeometry(makeOuterShape(), { depth: 0.048, bevelEnabled: false });
+    const bottomPlate = new THREE.Mesh(bottomGeo, lacquerMat);
     bottomPlate.rotation.x = -Math.PI / 2;
-    bottomPlate.position.y = LEG_H - 0.02;
+    bottomPlate.position.y = LEG_H - 0.025;
     bottomPlate.receiveShadow = true;
     group.add(bottomPlate);
 
-    // ── SOUNDBOARD (warm spruce — fills the inner cavity, visible from above) ──
-    // Lighter, warmer colour so it reads clearly under concert lighting
-    const spruceMat = new THREE.MeshStandardMaterial({
-      color: 0xd4944a, roughness: 0.72, metalness: 0.0,
-    });
-    const sbGeo = new THREE.ExtrudeGeometry(makeInnerShape(), { depth: 0.030, bevelEnabled: false });
+    // ── COORDINATE NOTE ──
+    // rotation.x = -PI/2 on extruded shapes maps profile-Y → world -Z.
+    // Keyboard end = world Z=0, tail = world Z≈-3.7 (negative).
+    // All interior elements must use negative Z to sit inside the body.
+
+    // ── SOUNDBOARD (warm spruce) ──
+    // The extruded shape already covers Z=0 → -3.7 after rotation; just floor it.
+    const sbGeo = new THREE.ExtrudeGeometry(makeInnerShape(), { depth: 0.024, bevelEnabled: false });
     const sbMesh = new THREE.Mesh(sbGeo, spruceMat);
     sbMesh.rotation.x = -Math.PI / 2;
-    sbMesh.position.y = LEG_H + 0.010; // floor of the interior cavity
+    sbMesh.position.y = LEG_H + 0.006;
     sbMesh.receiveShadow = true;
     group.add(sbMesh);
 
-    // ── Soundboard grain lines (dark wood strips running bass→treble across grain) ──
-    // Interior Z axis: 0 = keyboard end, +Z = toward tail
-    const ribMat = new THREE.MeshStandardMaterial({ color: 0x6a3c12, roughness: 0.86, metalness: 0.0 });
-    // [centerX, centerZ, stripLength, yawAngle]
-    const ribData = [
-      [-0.90,  1.20,  2.20,  0.14],
-      [-0.35,  1.55,  2.50,  0.07],
-      [ 0.22,  1.75,  2.40, -0.02],
-      [ 0.78,  1.65,  2.10, -0.14],
-      [ 1.22,  1.35,  1.50, -0.30],
-      [ 1.52,  1.00,  0.90, -0.46],
-    ];
-    ribData.forEach(([rx, rz, rlen, rang]) => {
-      const rib = new THREE.Mesh(new THREE.BoxGeometry(0.030, 0.038, rlen), ribMat);
-      rib.position.set(rx, LEG_H + 0.058, rz);
-      rib.rotation.y = rang;
+    // Soundboard ribs — Z negative (into body), fanning from just inside keyboard end toward tail
+    // [x, z, length, yaw]
+    [
+      [-0.90, -1.08, 2.12,  0.15],
+      [-0.34, -1.46, 2.40,  0.07],
+      [ 0.22, -1.68, 2.32, -0.02],
+      [ 0.78, -1.60, 1.98, -0.15],
+      [ 1.22, -1.30, 1.42, -0.33],
+      [ 1.52, -0.92, 0.82, -0.50],
+    ].forEach(([rx, rz, rl, ra]) => {
+      const rib = new THREE.Mesh(new THREE.BoxGeometry(0.027, 0.034, rl), ribMat);
+      rib.position.set(rx, LEG_H + 0.048, rz);
+      rib.rotation.y = ra;
       group.add(rib);
     });
 
-    // ── Pin block / wrest plank (thick maple bar at the keyboard end) ──
-    const pinBlockMat = new THREE.MeshStandardMaterial({ color: 0x1a1210, roughness: 0.62, metalness: 0.04 });
-    const pinBlock = new THREE.Mesh(new THREE.BoxGeometry(3.10, 0.08, 0.30), pinBlockMat);
-    pinBlock.position.set(0, LEG_H + 0.055, 0.24); // just inside body from keyboard end
-    group.add(pinBlock);
-
-    // Tuning pin rows (brass cylinders projecting upward from pin block)
-    const pinMat = new THREE.MeshStandardMaterial({ color: 0xb89228, roughness: 0.10, metalness: 0.96 });
-    for (let i = 0; i < 22; i++) {
-      const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.010, 0.010, 0.060, 5), pinMat);
-      pin.position.set(-1.30 + i * 0.124, LEG_H + 0.092, 0.24);
-      group.add(pin);
-    }
-
-    // ── Cast-iron harp / plate (gold, spans pin block to mid-body) ──
-    const harpMat = new THREE.MeshStandardMaterial({
-      color: 0xc8961e, roughness: 0.18, metalness: 0.90, transparent: true, opacity: 0.78,
-    });
-    // Structural bars fan diagonally from pin block toward the tail
-    // [centerX, centerZ, barLength, yawAngle]
-    const harpBarData = [
-      [-1.18,  0.90,  2.60,  0.28],
-      [-0.42,  1.20,  2.80,  0.18],
-      [ 0.32,  1.45,  2.60,  0.08],
-      [ 1.00,  1.30,  2.00, -0.06],
-      [ 1.48,  1.00,  1.20, -0.22],
-    ];
-    harpBarData.forEach(([hx, hz, hlen, hang]) => {
-      const bar = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.028, hlen), harpMat);
-      bar.position.set(hx, LEG_H + 0.082, hz);
-      bar.rotation.y = hang;
+    // ── CAST IRON HARP PLATE ──
+    // [x, z, length, yaw, width]  — z negative, struts fan from pin block toward tail
+    [
+      [-1.18, -0.86, 2.58,  0.29, 0.068],
+      [-0.40, -1.16, 2.80,  0.19, 0.062],
+      [ 0.36, -1.42, 2.64,  0.08, 0.058],
+      [ 1.04, -1.28, 2.08, -0.06, 0.054],
+      [ 1.50, -0.98, 1.28, -0.24, 0.050],
+    ].forEach(([hx, hz, hl, ha, hw]) => {
+      const bar = new THREE.Mesh(new THREE.BoxGeometry(hw, 0.032, hl), harpMat);
+      bar.position.set(hx, LEG_H + 0.088, hz);
+      bar.rotation.y = ha;
       group.add(bar);
     });
-    // Harp cross-beam at the pin block end
-    const harpBeam = new THREE.Mesh(new THREE.BoxGeometry(2.85, 0.030, 0.075), harpMat);
-    harpBeam.position.set(0, LEG_H + 0.086, 0.30);
+    // Cross beam at pin block end (just inside the keyboard wall)
+    const harpBeam = new THREE.Mesh(new THREE.BoxGeometry(2.90, 0.036, 0.082), harpMat);
+    harpBeam.position.set(0.04, LEG_H + 0.090, -0.28);
     group.add(harpBeam);
-    // Harp outer ring (follows the curved rim inside)
-    const harpRing = new THREE.Mesh(new THREE.BoxGeometry(2.80, 0.024, 0.055), harpMat);
-    harpRing.position.set(0.18, LEG_H + 0.082, 2.50);
-    harpRing.rotation.y = -0.55;
-    group.add(harpRing);
+    // Outer rail following bass rim curve toward tail
+    const harpRail = new THREE.Mesh(new THREE.BoxGeometry(2.30, 0.028, 0.052), harpMat);
+    harpRail.position.set(0.24, LEG_H + 0.086, -2.46);
+    harpRail.rotation.y = -0.52;
+    group.add(harpRail);
 
-    // ── Strings (thin wires from pin block fanning toward the tail) ──
-    const stringMat = new THREE.MeshStandardMaterial({
-      color: 0xe0d0a0, roughness: 0.06, metalness: 0.96,
-    });
-    for (let i = 0; i < 32; i++) {
-      const sx = -1.42 + i * 0.092;
-      // Bass strings (left) are longer; treble strings (right) shorter
-      const strLen = 2.20 - Math.max(sx, 0) * 0.38 + Math.max(-sx, 0) * 0.18;
-      // Strings fan slightly: bass strings angle toward the tail-left corner
-      const strAngle = sx * 0.055;
-      const strGeo = new THREE.CylinderGeometry(0.0042, 0.0042, strLen, 4);
+    // ── PIN BLOCK (wrest plank) — just behind the keyboard wall ──
+    const pinBlock = new THREE.Mesh(new THREE.BoxGeometry(3.10, 0.088, 0.34), pinBlockMat);
+    pinBlock.position.set(0, LEG_H + 0.052, -0.24);
+    group.add(pinBlock);
+
+    // Tuning pins — 3 staggered rows projecting upward from pin block
+    for (let row = 0; row < 3; row++) {
+      for (let i = 0; i < 14; i++) {
+        const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.009, 0.009, 0.068, 5), pinMat);
+        pin.position.set(-1.30 + i * 0.198 + row * 0.025, LEG_H + 0.100, -0.18 - row * 0.082);
+        group.add(pin);
+      }
+    }
+
+    // ── STRINGS — 38, running from pin block (z≈-0.30) toward tail ──
+    for (let i = 0; i < 38; i++) {
+      const t  = i / 37;               // 0 = bass (left), 1 = treble (right)
+      const sx = -1.42 + i * 0.078;
+      const strLen = 2.60 - t * 1.05;  // bass ~2.60 long, treble ~1.55
+      const gage   = 0.0065 - t * 0.003;
+      const fan    = (sx + 0.1) * 0.046;
+      const strGeo = new THREE.CylinderGeometry(gage, gage, strLen, 4);
       const str = new THREE.Mesh(strGeo, stringMat);
-      // Place string midpoint inside the body, starting from pin block (z≈0.30) going toward tail
-      str.position.set(sx, LEG_H + 0.098, 0.30 + strLen * 0.5);
-      str.rotation.x = Math.PI / 2; // lay flat (horizontal, running in Z)
-      str.rotation.z = strAngle;    // fan angle
+      // midpoint: starts at pin block (z=-0.30) and extends toward tail (-Z)
+      str.position.set(sx, LEG_H + 0.104, -0.30 - strLen * 0.5);
+      str.rotation.x = Math.PI / 2;
+      str.rotation.z = fan;
       group.add(str);
     }
 
-    // ── Interior cavity light (illuminates soundboard, harp, strings from above) ──
-    const cavityLight = new THREE.PointLight(0xfff0d0, 3.8, 4.5);
-    cavityLight.position.set(0.1, LEG_H + BODY_H + 0.15, 1.60); // just above the open rim, mid-body
-    group.add(cavityLight);
-
-    // ── Keyboard area ──
+    // ── KEYBOARD AREA ──
     const KBY = LEG_H + BODY_H;
 
     // Keybed platform
-    const keybedMesh = new THREE.Mesh(new THREE.BoxGeometry(3.10, 0.07, 0.56), pianoInnerMat);
-    keybedMesh.position.set(0, KBY + 0.035, 0.28);
+    const keybedMesh = new THREE.Mesh(new THREE.BoxGeometry(3.12, 0.062, 0.58), rimWoodMat);
+    keybedMesh.position.set(0, KBY + 0.031, 0.28);
     keybedMesh.receiveShadow = true;
     group.add(keybedMesh);
 
-    // Front key slip (thin strip at front of keys)
-    const keySlip = new THREE.Mesh(new THREE.BoxGeometry(3.06, 0.06, 0.055), pianoBodyMat);
-    keySlip.position.set(0, KBY + 0.07, 0.53);
+    // Key slip
+    const keySlip = new THREE.Mesh(new THREE.BoxGeometry(3.08, 0.056, 0.050), lacquerMat);
+    keySlip.position.set(0, KBY + 0.062, 0.550);
     group.add(keySlip);
 
-    // White keys as individual planks (52 keys → use instanced look with block + dividers)
-    const WK_W = 2.82, WK_D = 0.46;
-    const whiteKeyBlock = new THREE.Mesh(new THREE.BoxGeometry(WK_W, 0.072, WK_D), keyWhiteMat);
-    whiteKeyBlock.position.set(0, KBY + 0.072, 0.30);
+    // White keys (block with dividers)
+    const WK_W = 2.90, WK_D = 0.44;
+    const whiteKeyBlock = new THREE.Mesh(new THREE.BoxGeometry(WK_W, 0.066, WK_D), keyWhiteMat);
+    whiteKeyBlock.position.set(0, KBY + 0.066, 0.30);
     whiteKeyBlock.castShadow = true;
     group.add(whiteKeyBlock);
 
-    // Key divider lines (subtle grooves)
     const nWhite = 36;
     const kw = WK_W / nWhite;
     for (let i = 1; i < nWhite; i++) {
-      const d = new THREE.Mesh(new THREE.BoxGeometry(0.006, 0.074, WK_D - 0.018), keyBlackMat);
-      d.position.set(-WK_W / 2 + i * kw, KBY + 0.072, 0.29);
+      const d = new THREE.Mesh(new THREE.BoxGeometry(0.0045, 0.068, WK_D - 0.012), keyBlackMat);
+      d.position.set(-WK_W / 2 + i * kw, KBY + 0.066, 0.29);
       group.add(d);
     }
 
-    // Black keys (correct 2-3 grouping, 5 octaves)
+    // Black keys — 2-3-2-3 pattern, 5 octaves
     const bkOffsets = [1, 2, 4, 5, 6];
     for (let oct = 0; oct < 5; oct++) {
       bkOffsets.forEach(off => {
         const bx = -WK_W / 2 + (oct * 7 + off) * kw - kw * 0.5 + kw * 0.04;
-        const bk = new THREE.Mesh(new THREE.BoxGeometry(kw * 0.58, 0.11, WK_D * 0.58), keyBlackMat);
-        bk.position.set(bx, KBY + 0.14, 0.14);
+        const bk = new THREE.Mesh(new THREE.BoxGeometry(kw * 0.56, 0.110, WK_D * 0.60), keyBlackMat);
+        bk.position.set(bx, KBY + 0.138, 0.14);
+        bk.castShadow = true;
         group.add(bk);
       });
     }
 
-    // Cheek blocks (left/right ends of keyboard)
-    [-1.56, 1.56].forEach(cx => {
-      const cheek = new THREE.Mesh(new THREE.BoxGeometry(0.065, 0.20, 0.58), pianoBodyMat);
-      cheek.position.set(cx, KBY + 0.10, 0.29);
+    // Cheek blocks
+    [-1.60, 1.60].forEach(cx => {
+      const cheek = new THREE.Mesh(new THREE.BoxGeometry(0.060, 0.190, 0.60), lacquerMat);
+      cheek.position.set(cx, KBY + 0.095, 0.28);
       group.add(cheek);
     });
 
-    // Key cover / fallboard (closed, flat, sits over back of keys)
-    const fallboard = new THREE.Mesh(new THREE.BoxGeometry(2.96, 0.042, 0.22), pianoBodyMat);
-    fallboard.position.set(0, KBY + 0.20, -0.06);
+    // Fallboard
+    const fallboard = new THREE.Mesh(new THREE.BoxGeometry(3.02, 0.038, 0.24), lacquerMat);
+    fallboard.position.set(0, KBY + 0.178, -0.06);
     group.add(fallboard);
 
-    // Nameboard (front panel above keyboard with decorative strip)
-    const nameboard = new THREE.Mesh(new THREE.BoxGeometry(2.96, 0.16, 0.04), pianoBodyMat);
-    nameboard.position.set(0, KBY + 0.14, -0.20);
+    // Nameboard
+    const nameboard = new THREE.Mesh(new THREE.BoxGeometry(3.02, 0.148, 0.040), lacquerMat);
+    nameboard.position.set(0, KBY + 0.128, -0.222);
     group.add(nameboard);
 
-    // ── Music desk (angled sheet music stand) ──
-    const musicDeskMat = new THREE.MeshStandardMaterial({ color: 0x080706, roughness: 0.04, metalness: 0.88 });
-    const musicDesk = new THREE.Mesh(new THREE.BoxGeometry(1.90, 0.46, 0.040), musicDeskMat);
-    musicDesk.position.set(-0.06, KBY + 0.38, -0.22);
-    musicDesk.rotation.x = -0.26;
+    // ── MUSIC DESK ──
+    const musicDesk = new THREE.Mesh(new THREE.BoxGeometry(1.88, 0.48, 0.036), lacquerMat);
+    musicDesk.position.set(-0.06, KBY + 0.41, -0.22);
+    musicDesk.rotation.x = -0.24;
     musicDesk.castShadow = true;
     group.add(musicDesk);
-    // Desk ledge (bottom lip that holds sheet music)
-    const deskLedge = new THREE.Mesh(new THREE.BoxGeometry(1.90, 0.030, 0.08), musicDeskMat);
-    deskLedge.position.set(-0.06, KBY + 0.16, -0.15);
+    const deskLedge = new THREE.Mesh(new THREE.BoxGeometry(1.88, 0.026, 0.082), lacquerMat);
+    deskLedge.position.set(-0.06, KBY + 0.152, -0.142);
     group.add(deskLedge);
-    // Support brackets
-    [-0.75, 0.75].forEach(bx => {
-      const brk = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.025, 0.28), musicDeskMat);
-      brk.position.set(bx, KBY + 0.22, -0.10);
-      brk.rotation.x = -0.26;
+    [-0.72, 0.72].forEach(bx => {
+      const brk = new THREE.Mesh(new THREE.BoxGeometry(0.020, 0.020, 0.265), lacquerMat);
+      brk.position.set(bx, KBY + 0.210, -0.086);
+      brk.rotation.x = -0.24;
       group.add(brk);
     });
 
-    // ── Lid (open, propped — extruded from full outer profile) ──
+    // ── LID (open ~60°, propped) ──
+    // Lid hinge is near the keyboard end (Z≈0); lid sweeps back over the tail (-Z)
     const lidShape = makeOuterShape();
-    const lidGeo = new THREE.ExtrudeGeometry(lidShape, { depth: 0.048, bevelEnabled: false });
+    const lidGeo   = new THREE.ExtrudeGeometry(lidShape, { depth: 0.044, bevelEnabled: false });
     const lidPivot = new THREE.Group();
-    lidPivot.position.set(-0.20, LEG_H + BODY_H, 1.72);
+    lidPivot.position.set(-0.22, KBY, 0.20);  // pivot near keyboard end
     group.add(lidPivot);
-    const lidMesh = new THREE.Mesh(lidGeo, pianoBodyMat);
+    const lidMesh = new THREE.Mesh(lidGeo, lacquerMat);
     lidMesh.rotation.x = -Math.PI / 2;
-    lidMesh.position.set(0.20, 0, -1.72);
+    lidMesh.position.set(0.22, 0, -0.20);      // lid shape extends toward tail (-Z)
     lidMesh.castShadow = true;
     lidPivot.add(lidMesh);
-    // Add warm inner face to lid underside
-    const lidInnerShape = makeInnerShape();
-    const lidInnerGeo = new THREE.ExtrudeGeometry(lidInnerShape, { depth: 0.006, bevelEnabled: false });
-    const lidInner = new THREE.Mesh(lidInnerGeo, new THREE.MeshStandardMaterial({ color: 0x9a6428, roughness: 0.80 }));
+    // Warm underside (visible from above when lid is open)
+    const lidInnerGeo = new THREE.ExtrudeGeometry(makeInnerShape(), { depth: 0.007, bevelEnabled: false });
+    const lidInner = new THREE.Mesh(lidInnerGeo, new THREE.MeshStandardMaterial({
+      color: 0x6e2e0e, roughness: 0.80, metalness: 0.0,
+    }));
     lidInner.rotation.x = -Math.PI / 2;
-    lidInner.position.set(0.20, 0.003, -1.72);
+    lidInner.position.set(0.22, 0.004, -0.20);
     lidPivot.add(lidInner);
-    lidPivot.rotation.x = -Math.PI / 2 * 0.62; // open ~56°
+    lidPivot.rotation.x = Math.PI / 2 * 0.66;  // rotate up ~60° (positive = lifts lid)
 
-    // Lid prop stick
-    const propStick = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 1.18, 7), pianoBodyMat);
-    propStick.position.set(0.22, LEG_H + BODY_H + 0.50, -0.08);
-    propStick.rotation.z =  0.30;
-    propStick.rotation.x = -0.10;
+    // Prop stick (supports open lid — angled from body up to lid underside)
+    const propStick = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.013, 1.24, 7), lacquerInnerMat);
+    propStick.position.set(0.24, KBY + 0.54, -0.06);
+    propStick.rotation.z =  0.27;
+    propStick.rotation.x =  0.08;
     group.add(propStick);
 
-    // ── Three tapered legs ──
-    const casterMat = new THREE.MeshStandardMaterial({ color: 0x282420, roughness: 0.4, metalness: 0.65 });
-    const legPositions = [[-1.10, 0.22], [1.10, 0.22], [-0.10, 3.06]];
-    legPositions.forEach(([lx, lz]) => {
-      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.062, 0.038, LEG_H, 12), pianoBodyMat);
+    // ── LEGS ──
+    // Two front legs near keyboard end (+Z), one rear leg at tail (-Z)
+    const casterMat = new THREE.MeshStandardMaterial({ color: 0x181212, roughness: 0.32, metalness: 0.72 });
+    [[-1.12, 0.24], [1.12, 0.24], [-0.10, -3.04]].forEach(([lx, lz]) => {
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.068, 0.030, LEG_H, 14), lacquerMat);
       leg.position.set(lx, LEG_H / 2, lz);
       leg.castShadow = true;
       group.add(leg);
-      const caster = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.065, 0.040, 10), casterMat);
-      caster.position.set(lx, 0.020, lz);
+      const caster = new THREE.Mesh(new THREE.CylinderGeometry(0.060, 0.060, 0.035, 12), casterMat);
+      caster.position.set(lx, 0.017, lz);
       group.add(caster);
     });
 
-    // ── Pedal lyre ──
-    const lyreMesh = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.42, 0.060), pianoBodyMat);
-    lyreMesh.position.set(0, 0.21, 0.52);
+    // ── PEDAL LYRE ──
+    const lyreMesh = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.45, 0.056), lacquerMat);
+    lyreMesh.position.set(0, 0.225, 0.50);
     group.add(lyreMesh);
-    [-0.19, 0.19].forEach(px => {
-      const lyreleg = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.21, 6), pianoBodyMat);
-      lyreleg.position.set(px, 0.105, 0.58);
-      group.add(lyreleg);
+    [-0.20, 0.20].forEach(px => {
+      const ll = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.225, 7), lacquerMat);
+      ll.position.set(px, 0.112, 0.560);
+      group.add(ll);
     });
-    [-0.16, 0, 0.16].forEach(px => {
-      const pedal = new THREE.Mesh(new THREE.BoxGeometry(0.092, 0.040, 0.18), pedalMat);
-      pedal.position.set(px, 0.090, 0.56);
+    [-0.17, 0, 0.17].forEach(px => {
+      const pedal = new THREE.Mesh(new THREE.BoxGeometry(0.088, 0.036, 0.168), pedalMat);
+      pedal.position.set(px, 0.086, 0.538);
       pedal.rotation.x = 0.22;
       group.add(pedal);
     });
 
-    // ── Piano bench ──
+    // ── BENCH ──
     const benchGroup = new THREE.Group();
-    benchGroup.position.set(0.06, 0, 1.68);
+    benchGroup.position.set(0.06, 0, 1.70);
     group.add(benchGroup);
 
-    // Bench top cushion (two-layer for slight volume)
-    const benchTopMesh = new THREE.Mesh(
-      new THREE.BoxGeometry(1.04, 0.095, 0.46), benchCushionMat
-    );
-    benchTopMesh.position.y = 0.50;
-    benchTopMesh.castShadow = true;
-    benchGroup.add(benchTopMesh);
+    const benchTop = new THREE.Mesh(new THREE.BoxGeometry(1.08, 0.088, 0.46), cushionMat);
+    benchTop.position.y = LEG_H + 0.044;
+    benchTop.castShadow = true;
+    benchGroup.add(benchTop);
+    const benchCrown = new THREE.Mesh(new THREE.BoxGeometry(1.02, 0.028, 0.40), cushionMat);
+    benchCrown.position.y = LEG_H + 0.096;
+    benchGroup.add(benchCrown);
 
-    const cushionInner = new THREE.Mesh(
-      new THREE.BoxGeometry(0.94, 0.06, 0.37),
-      new THREE.MeshStandardMaterial({ color: 0x221b16, roughness: 0.92 })
-    );
-    cushionInner.position.y = 0.53;
-    benchGroup.add(cushionInner);
-
-    // Bench legs (4 tapered)
-    [[-0.42,-0.17],[0.42,-0.17],[-0.42,0.17],[0.42,0.17]].forEach(([lx,lz]) => {
-      const bl = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.030, 0.020, 0.45, 8), pianoBodyMat
-      );
-      bl.position.set(lx, 0.225, lz);
+    [[-0.40, 0.14], [0.40, 0.14], [-0.40, -0.14], [0.40, -0.14]].forEach(([bx, bz]) => {
+      const bl = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.013, LEG_H * 0.97, 8), lacquerMat);
+      bl.position.set(bx, LEG_H * 0.485, bz);
       bl.castShadow = true;
       benchGroup.add(bl);
     });
-
-    // Bench stretcher bar
-    const stretcherBar = new THREE.Mesh(new THREE.BoxGeometry(0.84, 0.022, 0.022), pianoBodyMat);
-    stretcherBar.position.set(0, 0.19, 0);
+    const stretcherBar = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.020, 0.020), lacquerMat);
+    stretcherBar.position.set(0, 0.21, 0);
     benchGroup.add(stretcherBar);
 
-    // ── Lighting ──
-
-    // Ambient — near-black
-    scene.add(new THREE.AmbientLight(0x0e0c10, 0.45));
-
-    // Main stage spotlight (warm, from above-front-right)
-    const spotLight = new THREE.SpotLight(0xffe8c0, 9.5, 16, Math.PI * 0.19, 0.38, 1.4);
-    spotLight.position.set(2.2, 7.0, 4.0);
-    spotLight.target.position.set(0, 1.2, 1.0);
-    spotLight.castShadow = true;
-    spotLight.shadow.mapSize.set(1024, 1024);
-    scene.add(spotLight);
-    scene.add(spotLight.target);
-
-    // Cool blue rim from upper-back-left (moonlight / window)
-    const rimLight = new THREE.DirectionalLight(0x304868, 1.05);
-    rimLight.position.set(-5, 7, -4);
-    rimLight.castShadow = true;
-    rimLight.shadow.mapSize.set(1024, 1024);
-    scene.add(rimLight);
-
-    // Warm amber bounce off floor
-    const fillLight = new THREE.PointLight(0xff8830, 1.6, 7);
-    fillLight.position.set(-2.2, 0.4, 2.5);
-    scene.add(fillLight);
-
-    // Soundboard cavity warm glow — makes the spruce wood luminous from inside
-    const cavityGlow = new THREE.PointLight(0xffa840, 2.2, 3.5);
-    cavityGlow.position.set(0, LEG_H + 0.22, -0.8);
-    group.add(cavityGlow);
-
-    // Second cavity glow deeper in the body (tail area)
-    const cavityGlow2 = new THREE.PointLight(0xff8820, 1.4, 2.8);
-    cavityGlow2.position.set(-0.4, LEG_H + 0.18, -1.8);
-    group.add(cavityGlow2);
-
-    // Keyboard well glow
-    const interiorLight = new THREE.PointLight(0xffd090, 1.4, 2.8);
-    interiorLight.position.set(0, KBY + 0.18, 0.3);
-    group.add(interiorLight);
-
-    // Lid underside warm bounce
-    const lidBounce = new THREE.PointLight(0xffb050, 0.9, 3.2);
-    lidBounce.position.set(-0.2, KBY + 1.1, 0.5);
-    group.add(lidBounce);
-
-    // ── Floor reflection quad (fake) ──
-    const reflectGeo = new THREE.PlaneGeometry(10, 10);
-    const reflectMat = new THREE.MeshStandardMaterial({
-      color: 0x080806,
-      roughness: 0.02,
-      metalness: 0.95,
-      transparent: true,
-      opacity: 0.7,
-    });
-    const reflect = new THREE.Mesh(reflectGeo, reflectMat);
-    reflect.rotation.x = -Math.PI / 2;
-    reflect.position.y = 0.001;
-    reflect.receiveShadow = true;
-    scene.add(reflect);
-
-    // ── Particles / dust ──
-    const particleCount = 220;
-    const particleGeo = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      positions[i*3]   = (Math.random() - 0.5) * 12;
-      positions[i*3+1] = Math.random() * 4;
-      positions[i*3+2] = (Math.random() - 0.5) * 12;
+    // ── STAGE DUST PARTICLES (floating in spotlight beam) ──
+    const DUST = 300;
+    const dustGeo = new THREE.BufferGeometry();
+    const dPos = new Float32Array(DUST * 3);
+    const dVel = new Float32Array(DUST * 3);
+    for (let i = 0; i < DUST; i++) {
+      dPos[i*3]   = (Math.random() - 0.5) * 9;
+      dPos[i*3+1] = Math.random() * 7 + 0.4;
+      dPos[i*3+2] = (Math.random() - 0.5) * 7;
+      dVel[i*3]   = (Math.random() - 0.5) * 0.0018;
+      dVel[i*3+1] = Math.random() * 0.0007 + 0.0002;
+      dVel[i*3+2] = (Math.random() - 0.5) * 0.0018;
     }
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particleMat = new THREE.PointsMaterial({
-      size: 0.015,
-      color: 0xffd090,
-      transparent: true,
-      opacity: 0.5,
-      sizeAttenuation: true,
-    });
-    const particles = new THREE.Points(particleGeo, particleMat);
-    scene.add(particles);
-
-    // ── Camera target & smooth tracking ──
-    const camTarget = new THREE.Vector3(5.5, 4.5, 9);
-    const camLook = new THREE.Vector3(0, 0.5, 0);
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
+    const dustPoints = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+      color: 0xfff0d0, size: 0.016, transparent: true, opacity: 0.50, sizeAttenuation: true,
+    }));
+    scene.add(dustPoints);
 
     // ── Resize ──
     window.addEventListener('resize', () => {
@@ -1435,61 +1499,41 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    // ── Loader simulation ──
-    let progress = 0;
-    const loaderBar = document.getElementById('loader-bar');
-    const loaderPct = document.getElementById('loader-pct');
-    const loader = document.getElementById('loader');
-
-    const loadInterval = setInterval(() => {
-      progress += Math.random() * 18;
-      if (progress >= 100) { progress = 100; clearInterval(loadInterval); revealUI(); }
-      loaderBar.style.width = progress + '%';
-      loaderPct.textContent = Math.floor(progress) + '%';
-    }, 120);
-
-    function revealUI() {
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        document.querySelectorAll('.reveal').forEach((el, i) => {
-          setTimeout(() => el.classList.add('in'), i * 80);
-        });
-      }, 400);
-    }
+    // ── Camera state ──
+    let camX = 3.6, camY = 2.9, camZ = 7.6;
 
     // ── Animate ──
-    let time = 0;
-    let camX = 4.8, camY = 4.2, camZ = 8.5;
-
     function animate() {
       requestAnimationFrame(animate);
-      time += 0.007;
+      const time = performance.now() * 0.001;
 
-      // Gentle model float
-      group.position.y = Math.sin(time * 0.55) * 0.035;
-      group.rotation.y = Math.sin(time * 0.22) * 0.05 + mouseX * 0.10;
+      // Gentle float
+      group.position.y = Math.sin(time * 0.36) * 0.020;
 
-      // Particle drift
-      particles.rotation.y = time * 0.04;
-      const pPos = particles.geometry.attributes.position.array;
-      for (let i = 0; i < particleCount; i++) {
-        pPos[i*3+1] += 0.002;
-        if (pPos[i*3+1] > 4) pPos[i*3+1] = 0;
+      // Very slow rotation — just enough to sweep light across the lacquer
+      group.rotation.y = 0.12 + Math.sin(time * 0.16) * 0.022 + mouseX * 0.055;
+
+      // Dust rises and loops
+      for (let i = 0; i < DUST; i++) {
+        dPos[i*3]   += dVel[i*3];
+        dPos[i*3+1] += dVel[i*3+1];
+        dPos[i*3+2] += dVel[i*3+2];
+        if (dPos[i*3+1] > 8) dPos[i*3+1] = 0.4;
       }
-      particles.geometry.attributes.position.needsUpdate = true;
+      dustGeo.attributes.position.needsUpdate = true;
 
-      // Keyboard glow shimmer
-      interiorLight.intensity = 1.4 + Math.sin(time * 2.1) * 0.08 + Math.sin(time * 5.3) * 0.03;
+      // Cavity shimmer
+      cavityLight.intensity = 8 + Math.sin(time * 1.85) * 0.18 + Math.sin(time * 4.6) * 0.07;
 
       // Camera smooth parallax
-      const targetX = 4.8 + mouseX * 0.55;
-      const targetY = 4.2 - mouseY * 0.35;
-      const targetZ = 8.5 + mouseY * 0.18;
-      camX += (targetX - camX) * 0.04;
-      camY += (targetY - camY) * 0.04;
-      camZ += (targetZ - camZ) * 0.04;
+      const tX = 3.6 + mouseX * 0.50;
+      const tY = 2.9 - mouseY * 0.28;
+      const tZ = 7.6 + mouseY * 0.13;
+      camX += (tX - camX) * 0.04;
+      camY += (tY - camY) * 0.04;
+      camZ += (tZ - camZ) * 0.04;
       camera.position.set(camX, camY, camZ);
-      camera.lookAt(mouseX * 0.25, 1.0 - mouseY * 0.15, 1.2);
+      camera.lookAt(0.1 + mouseX * 0.18, 1.3 - mouseY * 0.10, 0.8);
 
       renderer.render(scene, camera);
     }
@@ -1534,6 +1578,5 @@
 
   })();
   </script>
-
-
-</body></html>
+</body>
+</html>
