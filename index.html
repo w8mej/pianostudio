@@ -29,7 +29,7 @@
       background: var(--black);
       color: var(--white);
       font-family: var(--font-mono);
-      overflow: hidden;
+      overflow-x: hidden; overflow-y: auto;
       cursor: none;
     }
 
@@ -69,8 +69,8 @@
 
     /* ── UI overlay ── */
     #ui {
-      position: fixed;
-      inset: 0;
+      position: relative;
+      width: 100%;
       z-index: 10;
       display: flex;
       flex-direction: column;
@@ -79,11 +79,14 @@
 
     /* ── Nav ── */
     nav {
+      position: fixed; top: 0; left: 0; right: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 28px 36px;
       pointer-events: all;
+      background: linear-gradient(to bottom, rgba(28,29,31,0.9) 0%, transparent 100%);
+      z-index: 100;
     }
 
     .nav-left {
@@ -139,7 +142,7 @@
 
     /* ── Hero text ── */
     .hero {
-      flex: 1;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -322,7 +325,7 @@
       width: 160px;
       height: 1px;
       background: rgba(242,237,232,0.1);
-      overflow: hidden;
+      overflow-x: hidden; overflow-y: auto;
     }
     .loader-bar {
       height: 100%;
@@ -516,7 +519,7 @@
       border: 1px solid rgba(242,237,232,0.07);
       background: rgba(242,237,232,0.02);
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden; overflow-y: auto;
       transition: background 0.3s;
     }
     .program-card:hover { background: rgba(242,237,232,0.04); }
@@ -677,9 +680,9 @@
     <nav>
       <div class="nav-left">
         <a href="#" class="logo-mark" id="nav-home">LM</a>
-        <ul class="nav-links">
-          <li><a href="#" data-panel="pedagogy">Pedagogy</a></li>
-          <li><a href="#" data-panel="programs">Programs</a></li>
+                <ul class="nav-links">
+          <li><a href="#" data-panel="who-we-serve">Who We Serve</a></li>
+          <li><a href="#" data-panel="about">About Lisa</a></li>
           <li><a href="#" data-panel="admissions">Admissions</a></li>
         </ul>
       </div>
@@ -694,12 +697,11 @@
     <div class="hero">
       <div class="hero-tag reveal">Master Pedagogue &nbsp;·&nbsp; Est. 1984</div>
       <h1 class="reveal" style="transition-delay:0.1s">
-        Where discipline<br>
-        becomes <em>artistry,</em><br>
-        and children flourish.
+        Where Grand Rapids Finds<br>
+        Its <em>Resonance.</em>
       </h1>
       <p class="hero-sub reveal" style="transition-delay:0.2s">
-        Forty years of classical instruction, character formation, and musical mastery — guided by one unwavering standard of excellence.
+        Experience over forty years of masterful piano instruction with Lisa Menerick—where classical rigor transforms into a lifelong intellectual and emotional advantage.
       </p>
       <div class="cta-row reveal" style="transition-delay:0.3s">
         <a href="#" class="btn-primary" data-panel="admissions">
@@ -708,10 +710,45 @@
             <path d="M2 10L10 2M10 2H4M10 2v6"/>
           </svg>
         </a>
-        <a href="#" class="btn-ghost" data-panel="pedagogy">Our Approach</a>
+        <a href="#overview" class="btn-ghost" onclick="document.getElementById('overview').scrollIntoView({behavior:'smooth'}); return false;">Studio Overview</a>
       </div>
     </div>
-  </div>
+  
+    <div id="overview" class="reveal" style="pointer-events: all; padding: 120px 36px; max-width: 1000px; margin: 0 auto; min-height: 100vh; position: relative; z-index: 20;">
+      <div style="margin-bottom: 80px;">
+        <h2 style="font-family: var(--font-display); font-weight: 300; font-size: clamp(38px, 5vw, 64px); line-height: 1.1; margin-bottom: 24px;">Mastering the Art of <em>Focus</em></h2>
+        <p style="font-size: 15px; letter-spacing: 0.02em; line-height: 1.85; color: rgba(242,237,232,0.8); max-width: 720px; font-family: var(--font-display);">
+          Our modern lives are louder, faster, and more demanding than ever. Between double shifts, endless screen time, and overbooked schedules, finding a moment of genuine focus can feel impossible. 
+          <br><br>
+          Whether you are a professional seeking a cognitive reset after a demanding week, or a parent looking for high-quality, screen-free enrichment that builds resilience in your child, <strong>Lisa Menerick Piano Studios</strong> offers the solution. Here, we slow down. We listen. We build mastery, step by step.
+        </p>
+      </div>
+      
+      <div class="pillars" style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+        <div class="pillar">
+          <span class="pillar-num">01</span>
+          <h3 class="pillar-title"><em>Cognitive</em> Development</h3>
+          <p class="pillar-body">Our Suzuki-informed method develops essential life skills—patience, problem-solving, and deep focus—giving students an academic and personal edge.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">02</span>
+          <h3 class="pillar-title">A Restorative <em>Outlet</em></h3>
+          <p class="pillar-body">Trade the urgency of the workday for the timelessness of a sonata. Piano study provides a proven method for stress relief and neurological reset.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">03</span>
+          <h3 class="pillar-title">Elevated <em>Performance</em></h3>
+          <p class="pillar-body">From intimate studio run-throughs to our formal Spring Recital, students gain the poise and confidence to share their art with others.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">04</span>
+          <h3 class="pillar-title"><em>Tailored</em> Instruction</h3>
+          <p class="pillar-body">Every curriculum is uniquely crafted. We respect your time and individual goals, ensuring that each minute at the bench is profoundly productive.</p>
+        </div>
+      </div>
+    </div>
+
+    </div>
 
   <!-- Stats -->
   <div class="stats reveal" style="transition-delay:0.5s">
@@ -732,218 +769,88 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════
-       PANEL 1 · PEDAGOGY
+       PANEL 1 · WHO WE SERVE
   ════════════════════════════════════════════════ -->
-  <div class="content-panel" id="panel-pedagogy">
+  <div class="content-panel" id="panel-who-we-serve">
     <button class="panel-close" data-close>Close</button>
     <div class="panel-inner">
-
-      <div class="panel-eyebrow">Philosophy of Instruction</div>
-      <h1 class="panel-h1">The <em>Menerick</em><br>Method</h1>
+      <div class="panel-eyebrow">Our Community</div>
+      <h1 class="panel-h1">Who We <em>Serve</em></h1>
       <p class="panel-intro">
-        True musical education does not begin at the keys — it begins in the character of the child. For four decades, Lisa Menerick has refined a pedagogy that draws from the foundational principles of the Suzuki tradition, the rigors of classical technique, and the irreplaceable formation of personal discipline. The result is a methodology that develops whole human beings, not merely competent performers.
+        Our studio is a haven for individuals and families across Grand Rapids who value excellence, discipline, and the profound enrichment that only true musical mastery can provide.
       </p>
 
-      <div class="section-label">Teaching Philosophy</div>
-      <h2 class="section-heading">Suzuki Influence &amp; <em>Technical Mastery</em></h2>
+      <div class="section-label">For the Driven</div>
+      <h2 class="section-heading">Medical <em>Professionals</em></h2>
       <p class="section-body">
-        The Menerick Method is deeply informed by the Suzuki philosophy that every child possesses the capacity for musical excellence when nurtured within a consistent, encouraging environment. Like Suzuki, Mrs. Menerick believes that the ear must lead the hand — that aural development, the internalized understanding of pitch, phrase, and musical intention, is the proper foundation for all technical achievement. A student who hears beautifully will eventually play beautifully.
-      </p>
-      <p class="section-body">
-        Upon this aural foundation, the Method builds rigorous technical dexterity: finger independence, proper hand position, voicing control, and dynamic range. These are not superficial habits but structural disciplines — the same disciplines that allow a student to move, in time, from Bartók's Mikrokosmos to a Chopin nocturne with integrity and ease. Technique is never an end in itself; it is the vocabulary through which musicality speaks.
+        The pace on the Medical Mile demands relentless precision and stamina. When you step off your shift at Corewell Health, your brain requires a different kind of engagement—a true cognitive reset. Piano study offers a restorative challenge that activates new neural pathways while providing profound stress relief. Reclaim your focus and find your sanctuary away from the hospital.
       </p>
 
       <div class="panel-divider"></div>
 
-      <div class="section-label">Character Formation</div>
-      <h2 class="section-heading">Discipline as a <em>Life Skill</em></h2>
+      <div class="section-label">For the Future</div>
+      <h2 class="section-heading">High-Achieving <em>Families</em></h2>
       <p class="section-body">
-        Mrs. Menerick has observed, across generations of students, that the habits formed at the piano bench extend far beyond the studio. The child who learns to practice deliberately — to identify a problem, isolate it, and solve it through patient repetition — is developing the same cognitive discipline that will serve them in mathematics, athletics, writing, and leadership. The instrument is the occasion; the formation is the purpose.
-      </p>
-      <p class="section-body">
-        Every lesson incorporates intentional moments of reflection: not merely "what did you play" but "how did you listen, how did you problem-solve, how did you persist when the passage resisted you?" These questions, asked consistently over years, shape students who are not only capable musicians but composed, resilient, and self-directed individuals.
+        From Forest Hills to East Grand Rapids and Ada, parents know that true advantage isn't just about academics—it's about character. Our curriculum instills the kind of discipline, patience, and screen-free focus that translates into every area of a child's life. Give your child the cognitive edge and the lifelong gift of musical mastery.
       </p>
 
       <div class="panel-divider"></div>
 
-      <div class="section-label">Annual Milestone</div>
-      <h2 class="section-heading">The Spring <em>Recital</em></h2>
+      <div class="section-label">For the Inspired</div>
+      <h2 class="section-heading">Urban <em>Creatives</em></h2>
       <p class="section-body">
-        Each year, the studio's Spring Recital stands as the culminating expression of the year's work — not a performance for parents alone, but a genuine rite of passage for every student. Mrs. Menerick prepares students not merely to play their pieces correctly but to inhabit them with confidence, poise, and communicative presence.
-      </p>
-      <p class="section-body">
-        The experience of performing before an audience — of managing anticipation, channeling preparation into presence, and receiving the acknowledgement of peers — is formative in ways that private practice alone cannot replicate. For many students, the Spring Recital is the first moment they discover that they are, in fact, capable of something extraordinary. That discovery, once made, is never forgotten.
-      </p>
-
-      <div class="panel-divider"></div>
-
-      <div class="section-label">Affiliations</div>
-      <p class="section-body" style="font-size:13px; color:rgba(242,237,232,0.45); letter-spacing:0.04em;">
-        Member, Suzuki Association of the Americas &nbsp;·&nbsp; Member, National Guild of Piano Teachers
+        Living in Heritage Hill or downtown means you're surrounded by the vibrant arts culture of Grand Rapids. Deepen your connection to the city's creative pulse by mastering an instrument yourself. Whether you're decoding a jazz progression or refining a classical piece, our studio provides a sophisticated, adult-centered approach to musical artistry.
       </p>
 
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════
-       PANEL 2 · PROGRAMS
+       PANEL 2 · ABOUT
   ════════════════════════════════════════════════ -->
-  <div class="content-panel" id="panel-programs">
+  <div class="content-panel" id="panel-about">
     <button class="panel-close" data-close>Close</button>
     <div class="panel-inner">
-
-      <div class="panel-eyebrow">Studio Curriculum</div>
-      <h1 class="panel-h1">Three Paths to<br><em>Artistic Excellence</em></h1>
+      <div class="panel-eyebrow">The Instructor</div>
+      <h1 class="panel-h1">About <em>Lisa Menerick</em></h1>
       <p class="panel-intro">
-        The studio's programs are designed not as interchangeable products but as carefully considered pathways — each calibrated to a particular stage of development, learning style, and musical ambition. Every program reflects the standards of the Menerick Method while honoring the individuality of each student.
+        Warm, empathetic, and relentlessly dedicated to her students' growth, Lisa brings the highest standards of classical instruction to every lesson.
       </p>
 
-      <div class="program-cards">
+      <p class="section-body" style="font-size: 19px; max-width: 720px; margin-bottom: 24px;">
+        For over forty years, Lisa Menerick has been a cornerstone of the West Michigan music community. As a dedicated Suzuki Instructor and Master Pedagogue, her approach goes far beyond reading notes; she nurtures a lifelong love of music and the character required to achieve excellence.
+      </p>
 
-        <div class="program-card">
-          <div class="program-card-num">I</div>
-          <div class="program-card-label">Flagship Program</div>
-          <h3 class="program-card-title">Private Piano &amp; <em>Voice Mastery</em></h3>
-          <p class="program-card-body">
-            The studio's foundational offering, Private Piano &amp; Voice Mastery, places the student at the center of an entirely individualized curriculum. No two students follow the same path — because no two musicians share the same strengths, temperament, or timeline. Within the private lesson, Mrs. Menerick conducts a continuous, evolving assessment of each student's aural development, technical dexterity, sight-reading fluency, and expressive musicality, shaping instruction to meet the student precisely where they are while consistently drawing them forward.
-            <br><br>
-            Repertoire selections are chosen not merely for their technical demands but for their capacity to illuminate musical ideas: the architecture of a Bach invention, the singing line of a Romantic melody, the rhythmic vitality of a contemporary étude. Vocal study may be integrated where appropriate, developing breath support, tonal resonance, and the intimate connection between sung phrase and piano voicing. Students enrolled in this program are prepared, at an appropriate stage, for participation in the National Guild of Piano Teachers evaluations — a nationally recognized measure of musical achievement and artistic readiness.
-          </p>
-        </div>
-
-        <div class="program-card">
-          <div class="program-card-num">II</div>
-          <div class="program-card-label">Group Instruction</div>
-          <h3 class="program-card-title">The Collaborative <em>Theory Group</em></h3>
-          <p class="program-card-body">
-            Music is, at its heart, a social art — and the Collaborative Theory Group honors that truth. Designed for students who have established foundational technique through private instruction, this small-group program develops the complementary skills that ensemble and academic music study demand: harmonic analysis, rhythmic dictation, ear training, sight-singing, and the compositional logic underlying the music they perform.
-            <br><br>
-            The group format is intentional. Students gain irreplaceable experience articulating their musical observations to peers, defending interpretive choices, and listening with the heightened attention that ensemble playing demands. Social-musical skills — the ability to play in time with others, to subordinate ego to ensemble blend, to recover gracefully from a misstep in real time — are cultivated through structured group activities and collaborative arrangement exercises. Parents frequently observe that Theory Group students develop not only greater musical comprehension but also markedly improved confidence in academic settings, a testament to the cognitive discipline that music theory demands. Enrollment is by placement, ensuring that groups remain cohesive in level and productive in dynamic.
-          </p>
-        </div>
-
-        <div class="program-card">
-          <div class="program-card-num">III</div>
-          <div class="program-card-label">Seasonal Intensive</div>
-          <h3 class="program-card-title">The Summer <em>Samplers</em></h3>
-          <p class="program-card-body">
-            The Summer Samplers address a challenge every serious music educator recognizes: the long summer recess, without intentional structure, erodes the muscular memory, aural acuity, and reading fluency that students have spent an academic year building. The studio's summer program is designed as the antidote — a focused, exploratory series of short-term intensives that maintain musical muscle while expanding a student's artistic vocabulary beyond the classical canon.
-            <br><br>
-            Each summer module introduces a new genre or idiom: Jazz harmony and improvisation, Brazilian choro, film score reduction, sacred hymnody, or popular song arrangement. Students apply their trained technical dexterity and theoretical understanding to unfamiliar musical languages, discovering both the universality of musicianship and the particular pleasures of stylistic exploration. The Samplers are deliberately designed to feel different from the academic year — lighter in formality, broader in repertoire, rich in discovery — while never abandoning the standards of careful listening and intentional practice that define the Menerick Method. Enrollment is open to all current studio students and select returning students by arrangement.
-          </p>
-        </div>
-
-      </div>
+      <p class="section-body" style="font-size: 19px; max-width: 720px;">
+        Lisa is profoundly engaged with her profession as a member of the Michigan Music Teachers National Association (MMTNA) and the National Guild of Piano Teachers. Closer to home, she maintains deep roots in the local arts scene as a Lifetime Member of the St. Cecilia Music Society and a member of the Grand Rapids Piano Forum.
+      </p>
 
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════
-       PANEL 3 · ADMISSIONS
+       PANEL 3 · ADMISSIONS (CONTACT)
   ════════════════════════════════════════════════ -->
   <div class="content-panel" id="panel-admissions">
     <button class="panel-close" data-close>Close</button>
     <div class="panel-inner">
-
-      <div class="panel-eyebrow">Studio Enrollment</div>
-      <h1 class="panel-h1">The Path to<br><em>Admission</em></h1>
+      <div class="panel-eyebrow">Take the First Step</div>
+      <h1 class="panel-h1">Begin Your<br><em>Musical Journey</em></h1>
       <p class="panel-intro">
-        Placement within the Lisa Menerick Piano Studio is intentionally limited. This is not a matter of exclusivity for its own sake, but of pedagogical commitment: every student admitted to the studio receives the dedicated, sustained attention that genuine musical formation requires. Mrs. Menerick maintains a carefully sized studio roster so that no student is ever simply processed through a curriculum — each is known, each is guided with purpose, and each is held to a standard appropriate to their full potential.
+        Whether you're seeking a creative outlet for yourself or foundational discipline for your child, the right instruction makes all the difference. Let's find out if our studio is the right fit for your family.
       </p>
 
-      <div class="section-label">Enrollment Process</div>
-      <h2 class="section-heading">A Three-Step <em>Path</em></h2>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-num-col"><div class="step-num">01</div></div>
-          <div class="step-content">
-            <div class="step-title"><em>Initial Inquiry</em></div>
-            <p class="step-body">
-              Families begin by submitting a brief written inquiry, describing the prospective student's age, any prior musical experience, and the goals they hope the studio will serve. This inquiry need not be elaborate — a thoughtful paragraph is sufficient. Mrs. Menerick reviews all inquiries personally and responds within one week. Families whose students appear to be a strong match for the studio's current capacity will be invited to schedule a Student Consultation. There is no application fee.
-            </p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num-col"><div class="step-num">02</div></div>
-          <div class="step-content">
-            <div class="step-title">Student Consultation &amp; <em>Placement Examination</em></div>
-            <p class="step-body">
-              The consultation is a relaxed, thirty-to-forty-five-minute meeting at the studio — a conversation as much as an assessment. Mrs. Menerick meets the prospective student, invites them to explore the piano freely, and engages in a brief, informal evaluation of their aural responsiveness, physical disposition at the instrument, and natural musicality. For students with prior instruction, a short sight-reading and technical review will be included. The purpose is placement, not judgment: to understand where the student is so that instruction can begin precisely from that point.
-            </p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num-col"><div class="step-num">03</div></div>
-          <div class="step-content">
-            <div class="step-title"><em>Studio Integration</em></div>
-            <p class="step-body">
-              Upon successful placement, the family receives a Studio Agreement outlining lesson scheduling, practice expectations, recital participation, and the studio's philosophy of partnership between teacher, student, and family. The first three lessons are treated as a mutual orientation period: a time for the student to acclimate, for Mrs. Menerick to refine her initial assessment, and for families to confirm that the studio's approach aligns with their aspirations for their child. It is Mrs. Menerick's experience that when all three partners — teacher, student, and family — are fully engaged, the results are, without exception, extraordinary.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel-divider"></div>
-
       <div class="cta-block">
-        <div class="cta-block-label">Begin Your Inquiry</div>
+        <div class="cta-block-label">Low-Friction Consultation</div>
         <div class="cta-options">
-          <a href="#" class="cta-opt primary">Request a Consultation</a>
-          <a href="#" class="cta-opt">Schedule an Introduction</a>
-          <a href="#" class="cta-opt">Inquire About Enrollment</a>
-          <a href="#" class="cta-opt">Apply for Placement</a>
-          <a href="#" class="cta-opt">Arrange a Studio Visit</a>
+          <a href="#" class="cta-opt primary">Request Your Free Studio Tour & Intro Lesson</a>
+          <a href="#" class="cta-opt">Book a Complimentary Consultation</a>
         </div>
-      </div>
-
-      <div class="panel-divider"></div>
-
-      <div class="section-label">Frequently Asked Questions</div>
-      <h2 class="section-heading">For <em>Prospective Families</em></h2>
-
-      <div class="faq">
-
-        <div class="faq-item">
-          <div class="faq-q">At what age may a child begin instruction?</div>
-          <p class="faq-a">
-            The studio welcomes students beginning at age five, provided the child demonstrates the attentional readiness and physical coordination appropriate for early Suzuki-based instruction. Mrs. Menerick has found that early beginning is not merely permissible but deeply advantageous: the ear, the ear's formation, the natural absorption of musical language — these capacities are at their most plastic in the early years. That said, there is no upper limit. Students who begin in adolescence or adulthood are welcomed with equal seriousness and equal expectation of progress.
-          </p>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-q">How much daily practice should we expect?</div>
-          <p class="faq-a">
-            Practice requirements are calibrated to the student's level and program. Beginning students typically practice fifteen to twenty minutes daily — a modest commitment that, when consistent, produces remarkable results within the first year. Intermediate students are expected to maintain thirty to forty-five minutes of focused daily practice. The emphasis is on the quality and intentionality of practice, not its duration. Mrs. Menerick will guide families specifically on what "productive practice" looks like at each stage, so that the time at home is genuinely formative rather than merely repetitive.
-          </p>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-q">Is a piano at home required before enrollment?</div>
-          <p class="faq-a">
-            A practice instrument at home is essential — progress without daily access to the keyboard is simply not possible. A full-size acoustic piano is the ideal, though a quality weighted-key digital instrument is an acceptable and practical alternative for beginning students. Mrs. Menerick is glad to offer guidance on instrument selection at the time of enrollment. Families are encouraged to view the instrument as an investment in the student's formation — one that will serve them for decades.
-          </p>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-q">What role does the parent play in the lesson process?</div>
-          <p class="faq-a">
-            Particularly for younger students, parental engagement is not optional — it is a cornerstone of the Menerick Method's effectiveness. Parents are invited to observe lessons, to take brief notes on the week's practice priorities, and to provide calm, encouraging support at home. A parent who is present, informed, and positive in their engagement with practice is among the most powerful factors in a young student's progress. Mrs. Menerick views the family as a genuine partner in the student's formation, and her communication with families is direct, specific, and ongoing.
-          </p>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-q">What distinguishes this studio from other private instruction?</div>
-          <p class="faq-a">
-            The Menerick Method is distinguished not by a single technique or a particular repertoire list, but by an integrated vision of what music education is for. Over forty years, Mrs. Menerick has watched students leave the studio and go on to careers in medicine, law, science, and the arts — carrying with them not necessarily a musical vocation, but the disciplined mind, the capacity for sustained concentration, and the confidence that comes from having mastered something genuinely difficult. It is this formation — technical, musical, and human — that the studio exists to provide.
-          </p>
-        </div>
-
       </div>
 
     </div>
   </div>
-
+  
   <script>
   (function() {
 
