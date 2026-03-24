@@ -1,0 +1,5 @@
+# ads.txt — Authorized Digital Sellers
+# https://grandrapidspiano.com/
+#
+# No advertising inventory is authorized for sale on this website.
+# This file intentionally contains no seller entries.
