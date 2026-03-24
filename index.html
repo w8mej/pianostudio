@@ -877,7 +877,7 @@
   <script>
   window.addEventListener('load', () => {
   (function() {
-    let renderer, scene, camera, group, dustGeo, dPos, dVel, cavityLight, mouseX, mouseY;
+    let renderer, scene, camera, group, dustGeo, dPos, dVel, cavityLight, mouseX, mouseY, camX, camY, camZ, isPaused, lastTime;
 
     // ── Cursor ──
     const cursor = document.getElementById('cursor');
@@ -1433,10 +1433,10 @@
     });
 
     // ── Camera state ──
-    let camX = 3.6, camY = 2.9, camZ = 7.6, isPaused = false;
+    camX = 3.6; camY = 2.9; camZ = 7.6; isPaused = false;
 
     // ── Animate ──
-        let lastTime = 0;
+        lastTime = 0;
      
  requestAnimationFrame(animate); 
  } 
