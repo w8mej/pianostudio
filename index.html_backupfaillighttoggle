@@ -3,16 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Award-winning piano &amp; voice lessons in Grand Rapids, MI with Lisa Menerick. Degree-certified teacher, NGPT member, President of West Michigan Piano Teachers. Ages 4–adult." />
-  <title>Menerick Piano &amp; Voice Studios | Grand Rapids</title>
-  <link rel="canonical" href="https://grandrapidspiano.com/" />
+  <meta name="description" content="Lisa Menerick Piano Studio in Grand Rapids, MI. Expert piano instruction for professionals, families &amp; creatives. 40+ years of masterful pedagogy." />
+  <title>Lisa Menerick Piano Studio | Expert Piano Instruction</title>
   <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <meta property="og:title" content="Menerick Piano &amp; Voice Studios | Grand Rapids" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://grandrapidspiano.com/" />
-  <meta property="og:image" content="https://grandrapidspiano.com/og-image.jpg" />
-  <meta property="og:description" content="Award-winning piano &amp; voice lessons in Grand Rapids, MI with Lisa Menerick. Degree-certified teacher, NGPT member, President of West Michigan Piano Teachers. Ages 4–adult." />
   <link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="https://fonts.gstatic.com/s/geistmono/v4/or3nQ6H-1_WfwkMZI_qYFrcdmg.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preconnect" href="https://stats.g.doubleclick.net" />
@@ -694,78 +687,26 @@
       border-color: var(--white);
     }
     .cta-opt.primary:hover { background: var(--warm); border-color: var(--warm); }
+
+    /* ── Refactored Inline Styles ── */
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-5 { transition-delay: 0.5s; }
+    .overview-section { pointer-events: all; padding: 120px 36px; max-width: 1000px; margin: 0 auto; min-height: 100vh; position: relative; z-index: 20; }
+    .overview-header-wrap { margin-bottom: 80px; }
+    .overview-h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(38px, 5vw, 64px); line-height: 1.1; margin-bottom: 24px; }
+    .overview-p { font-size: 15px; letter-spacing: 0.02em; line-height: 1.85; color: rgba(242,237,232,0.8); max-width: 720px; font-family: var(--font-display); }
+    .overview-pillars-grid { margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .about-p { font-size: 19px; max-width: 720px; margin-bottom: 24px; }
+    .about-p-last { font-size: 19px; max-width: 720px; }
   </style>
-  <!-- Schema.org Structured Data -->
-  <script type="application/ld+json">
-  [
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "https://grandrapidspiano.com/#lisa-menerick",
-      "name": "Lisa Menerick",
-      "jobTitle": "Piano & Voice Instructor",
-      "description": "Certified Suzuki Instructor, former Mayor of Ferrysburg, and lifelong educator with over 40 years of piano and voice instruction experience in West Michigan.",
-      "url": "https://grandrapidspiano.com/",
-      "alumniOf": [
-        { "@type": "CollegeOrUniversity", "name": "Michigan State University" },
-        { "@type": "CollegeOrUniversity", "name": "Sullins College" },
-        { "@type": "CollegeOrUniversity", "name": "Wayne State University" },
-        { "@type": "CollegeOrUniversity", "name": "Grand Valley State University" }
-      ],
-      "memberOf": [
-        { "@type": "Organization", "name": "National Guild of Piano Teachers" },
-        { "@type": "Organization", "name": "Michigan Music Teachers National Association (MMTNA)" },
-        { "@type": "Organization", "name": "Grand Rapids Piano Teachers Forum" },
-        { "@type": "Organization", "name": "St. Cecilia Music Society" },
-        { "@type": "Organization", "name": "West Michigan Piano Teachers" },
-        { "@type": "Organization", "name": "American College of Musicians National Guild of Piano Teachers" },
-        { "@type": "Organization", "name": "Tuesday Musicale" }
-      ],
-      "knowsAbout": ["Piano Instruction", "Voice Instruction", "Suzuki Method", "Music Pedagogy"],
-      "worksFor": { "@id": "https://grandrapidspiano.com/#studio" }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": ["LocalBusiness", "ProfessionalService"],
-      "@id": "https://grandrapidspiano.com/#studio",
-      "name": "Menerick Piano & Voice Studios",
-      "url": "https://grandrapidspiano.com/",
-      "description": "Piano and voice lessons for ages 4 through adult. Private and group instruction in Grand Rapids, MI and along the West Michigan Lakeshore.",
-      "foundingDate": "1984",
-      "areaServed": [
-        { "@type": "City", "name": "Grand Rapids", "containedInPlace": { "@type": "State", "name": "Michigan" } },
-        { "@type": "Place", "name": "West Michigan Lakeshore" }
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "741 Kenmoor Ave. SE, Suite B",
-        "addressLocality": "Grand Rapids",
-        "addressRegion": "MI",
-        "postalCode": "49546",
-        "addressCountry": "US"
-      },
-      "telephone": "+16165601401",
-      "email": "lisamenerickpiano@gmail.com",
-      "priceRange": "$$",
-      "employee": { "@id": "https://grandrapidspiano.com/#lisa-menerick" },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Lesson Programs",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Private Piano Lessons", "description": "One-on-one piano instruction for students age 4 through adult using Suzuki-informed methodology." } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Private Voice Lessons", "description": "Individual voice instruction for all skill levels." } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Group Instruction", "description": "Small-group piano and voice classes available for all ages." } }
-        ]
-      }
-    }
-  ]
-  </script>
 </head>
 <body>
 
   <!-- Loader -->
   <div id="loader">
-    <div class="loader-logo">Menerick Piano &amp; Voice Studios</div>
+    <div class="loader-logo">Menerick Piano Studio</div>
     <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
     <div class="loader-pct" id="loader-pct">0%</div>
   </div>
@@ -797,15 +738,15 @@
     </nav>
 
     <div class="hero">
-      <div class="hero-tag reveal">Piano &amp; Voice &nbsp;·&nbsp; Member of NGPT since 1979</div>
-      <h1 class="reveal" style="transition-delay:0.1s">
+      <div class="hero-tag reveal">Master Pedagogue &nbsp;·&nbsp; Est. 1984</div>
+      <h1 class="reveal delay-1">
         Where Grand Rapids Finds<br>
         Its <em>Resonance.</em>
       </h1>
-      <p class="hero-sub reveal" style="transition-delay:0.2s">
-        Piano &amp; voice lessons from age 4 through adult. Private and group instruction in Grand Rapids and along the Lakeshore.
+      <p class="hero-sub reveal delay-2">
+        Experience over forty years of masterful piano instruction with Lisa Menerick—where classical rigor transforms into a lifelong intellectual and emotional advantage.
       </p>
-      <div class="cta-row reveal" style="transition-delay:0.3s">
+      <div class="cta-row reveal delay-3">
         <a href="#" class="btn-primary" data-panel="admissions">
           Request a Consultation
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -816,17 +757,17 @@
       </div>
     </div>
   
-    <div id="overview" class="reveal" style="pointer-events: all; padding: 120px 36px; max-width: 1000px; margin: 0 auto; min-height: 100vh; position: relative; z-index: 20;">
-      <div style="margin-bottom: 80px;">
-        <h2 style="font-family: var(--font-display); font-weight: 300; font-size: clamp(38px, 5vw, 64px); line-height: 1.1; margin-bottom: 24px;">Mastering the Art of <em>Focus</em></h2>
-        <p style="font-size: 15px; letter-spacing: 0.02em; line-height: 1.85; color: rgba(242,237,232,0.8); max-width: 720px; font-family: var(--font-display);">
+    <div id="overview" class="reveal overview-section">
+      <div class="overview-header-wrap">
+        <h2 class="overview-h2">Mastering the Art of <em>Focus</em></h2>
+        <p class="overview-p">
           Our modern lives are louder, faster, and more demanding than ever. Between double shifts, endless screen time, and overbooked schedules, finding a moment of genuine focus can feel impossible. 
           <br><br>
-          Whether you are a professional seeking a cognitive reset after a demanding week, or a parent looking for high-quality, screen-free enrichment that builds resilience in your child, <strong>Menerick Piano &amp; Voice Studios</strong> offers the solution. Here, we slow down. We listen. We build mastery, step by step.
+          Whether you are a professional seeking a cognitive reset after a demanding week, or a parent looking for high-quality, screen-free enrichment that builds resilience in your child, <strong>Lisa Menerick Piano Studios</strong> offers the solution. Here, we slow down. We listen. We build mastery, step by step.
         </p>
       </div>
       
-      <div class="pillars" style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+      <div class="pillars overview-pillars-grid">
         <div class="pillar">
           <span class="pillar-num">01</span>
           <h3 class="pillar-title"><em>Cognitive</em> Development</h3>
@@ -853,14 +794,14 @@
     </div>
 
   <!-- Stats -->
-  <div class="stats reveal" style="transition-delay:0.5s">
+  <div class="stats reveal delay-5">
     <div class="stat">
       <div class="stat-num">40+</div>
-      <div class="stat-label">Years teaching piano &amp; voice</div>
+      <div class="stat-label">Years of instruction</div>
     </div>
     <div class="stat">
-      <div class="stat-num">1979</div>
-      <div class="stat-label">NGPT member since</div>
+      <div class="stat-num">3</div>
+      <div class="stat-label">Curated programs</div>
     </div>
   </div>
 
@@ -916,64 +857,16 @@
       <div class="panel-eyebrow">The Instructor</div>
       <h2 class="panel-h1">About <em>Lisa Menerick</em></h2>
       <p class="panel-intro">
-        A celebrated educator, award-winning performer, civic leader, and former Mayor of Ferrysburg — Lisa Menerick has devoted her life to the transformative power of music and to nurturing every student who walks through her studio door.
+        Warm, empathetic, and relentlessly dedicated to her students' growth, Lisa brings the highest standards of classical instruction to every lesson.
       </p>
 
-      <p class="section-body" style="font-size: 19px; max-width: 720px; margin-bottom: 24px;">
-        Originally from East Grand Rapids — where she grew up across the street from President Gerald R. Ford — Lisa has been a defining voice in the West Michigan music community for over four decades. A theater education major at Michigan State University and a Degree Certified Teacher in the State of Michigan, she also holds credentials from Sullins College (Bristol, VA), Wayne State University, and Grand Valley State University.
+      <p class="section-body about-p">
+        For over forty years, Lisa Menerick has been a cornerstone of the West Michigan music community. As a dedicated Suzuki Instructor and Master Pedagogue, her approach goes far beyond reading notes; she nurtures a lifelong love of music and the character required to achieve excellence.
       </p>
 
-      <p class="section-body" style="font-size: 19px; max-width: 720px; margin-bottom: 24px;">
-        Lisa spent nearly 50 years as an elementary educator — most recently with Muskegon Public Schools — while simultaneously building one of West Michigan's most respected private piano and voice studios. Her performing career has carried her from intimate community stages to the national anthem podium at Loutit District Library's Naturalization Ceremony, the annual Ferrysburg Carol Sing, and the arena floor of the Professional Bull Riders as a licensed rodeo consultant. A professional actress in her own right, she brings a rare theatrical understanding of expression and presence to every student she teaches.
+      <p class="section-body about-p-last">
+        Lisa is profoundly engaged with her profession as a member of the Michigan Music Teachers National Association (MMTNA) and the National Guild of Piano Teachers. Closer to home, she maintains deep roots in the local arts scene as a Lifetime Member of the St. Cecilia Music Society and a member of the Grand Rapids Piano Forum.
       </p>
-
-      <p class="section-body" style="font-size: 19px; max-width: 720px; margin-bottom: 48px;">
-        Lisa is a recognized leader within the music education profession. As a longtime Active Member of the American College of Musicians / National Guild of Piano Teachers (since 1979) and the Grand Rapids Piano Teachers Forum, and having served as President of West Michigan Piano Teachers, she has shaped the standards of instruction across the region. As a competition judge for both Piano and Voice, and a Tuesday Musicale Student Performance Excellence adjudicator, she brings an evaluative eye sharpened by decades of performance and training. A Lifetime Member of the St. Cecilia Music Society, Lisa's commitment to West Michigan's cultural life is unwavering.
-      </p>
-
-      <div class="section-label">Credentials &amp; Affiliations</div>
-      <div class="pillars" style="grid-template-columns: repeat(2, 1fr); margin: 0 0 48px;">
-        <div class="pillar">
-          <span class="pillar-num">✦</span>
-          <div class="pillar-title" style="font-size:17px;">Degree Certified Teacher</div>
-          <p class="pillar-body">State of Michigan</p>
-        </div>
-        <div class="pillar">
-          <span class="pillar-num">✦</span>
-          <div class="pillar-title" style="font-size:17px;">American College of Musicians</div>
-          <p class="pillar-body">Active Member, National Guild of Piano Teachers · Since 1979</p>
-        </div>
-        <div class="pillar">
-          <span class="pillar-num">✦</span>
-          <div class="pillar-title" style="font-size:17px;">Grand Rapids Piano Teachers Forum</div>
-          <p class="pillar-body">Active Member</p>
-        </div>
-        <div class="pillar">
-          <span class="pillar-num">✦</span>
-          <div class="pillar-title" style="font-size:17px;">West Michigan Piano Teachers</div>
-          <p class="pillar-body">President</p>
-        </div>
-        <div class="pillar">
-          <span class="pillar-num">✦</span>
-          <div class="pillar-title" style="font-size:17px;">Professional Actress</div>
-          <p class="pillar-body">Bringing theatrical expression to every lesson</p>
-        </div>
-        <div class="pillar">
-          <span class="pillar-num">✦</span>
-          <div class="pillar-title" style="font-size:17px;">St. Cecilia Music Society</div>
-          <p class="pillar-body">Lifetime Member</p>
-        </div>
-        <div class="pillar">
-          <span class="pillar-num">✦</span>
-          <div class="pillar-title" style="font-size:17px;">Tuesday Musicale</div>
-          <p class="pillar-body">Student Performance Excellence Recognition</p>
-        </div>
-        <div class="pillar">
-          <span class="pillar-num">✦</span>
-          <div class="pillar-title" style="font-size:17px;">Competition Judge</div>
-          <p class="pillar-body">Piano &amp; Voice Competitions · Naturalization Ceremony Vocalist</p>
-        </div>
-      </div>
 
     </div>
   </div>
@@ -996,16 +889,6 @@
           <a href="#" class="cta-opt primary">Request Your Free Studio Tour & Intro Lesson</a>
           <a href="#" class="cta-opt">Book a Complimentary Consultation</a>
         </div>
-      </div>
-
-      <div class="cta-block" style="margin-top: 24px;">
-        <div class="cta-block-label">Studio Contact</div>
-        <address style="font-style: normal; font-family: var(--font-mono); font-size: 13px; line-height: 2.2; color: rgba(242,237,232,0.75);">
-          741 Kenmoor Ave. SE, Suite B<br>
-          Grand Rapids, MI 49546<br>
-          <a href="tel:+16165601401" style="color: var(--cta); text-decoration: none;">616-560-1401</a><br>
-          <a href="mailto:lisamenerickpiano@gmail.com" style="color: var(--cta); text-decoration: none;">lisamenerickpiano@gmail.com</a>
-        </address>
       </div>
 
     </div>
