@@ -1072,6 +1072,12 @@
   window.addEventListener('load', () => {
   (function() {
     let renderer, scene, camera, group, dustGeo, dPos, dVel, cavityLight, mouseX, mouseY, camX, camY, camZ, isPaused, lastTime, DUST;
+    let tabHidden = false;
+
+    // ── Tab visibility — stop rendering when tab is hidden ──
+    document.addEventListener('visibilitychange', () => {
+      tabHidden = document.hidden;
+    });
 
     // ── Cursor ──
     const cursor = document.getElementById('cursor');
@@ -1128,8 +1134,8 @@
 
     // ── Three.js Scene ──
     const canvas = document.getElementById('canvas');
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance', precision: 'mediump' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -1148,7 +1154,7 @@
     pmrem.compileCubemapShader();
     const envScene = new THREE.Scene();
     const envHull = new THREE.Mesh(
-      new THREE.SphereGeometry(80, 16, 16),
+      new THREE.SphereGeometry(80, 8, 8),
       new THREE.MeshBasicMaterial({ color: 0xe0d8d0, side: THREE.BackSide })
     );
     envScene.add(envHull);
@@ -1161,7 +1167,7 @@
       [ -4, 14,  2,  0xd0e0ff, 1.2],   // soft overhead fill
     ].forEach(([x, y, z, col, r]) => {
       const m = new THREE.Mesh(
-        new THREE.SphereGeometry(r, 6, 6),
+        new THREE.SphereGeometry(r, 4, 4),
         new THREE.MeshBasicMaterial({ color: col })
       );
       m.position.set(x, y, z);
@@ -1189,8 +1195,8 @@
       color: 0xe09830, roughness: 0.65, metalness: 0.0, envMapIntensity: 0.3,
     });
     // Interior dark wood
-    const rimWoodMat = new THREE.MeshStandardMaterial({
-      color: 0x1a0c05, roughness: 0.80, metalness: 0.0,
+    const rimWoodMat = new THREE.MeshLambertMaterial({
+      color: 0x1a0c05,
     });
     // Cast-iron harp / plate (gold)
     const harpMat = new THREE.MeshStandardMaterial({
@@ -1201,8 +1207,8 @@
       color: 0xe8dca0, roughness: 0.04, metalness: 1.0, envMapIntensity: 3.0,
     });
     // Steel tuning pins
-    const pinMat = new THREE.MeshStandardMaterial({
-      color: 0x888888, roughness: 0.20, metalness: 0.96,
+    const pinMat = new THREE.MeshLambertMaterial({
+      color: 0x888888,
     });
     // Ivory keys
     const keyWhiteMat = new THREE.MeshStandardMaterial({
@@ -1221,16 +1227,16 @@
       color: 0xd4c8b8, roughness: 0.15, metalness: 0.10, envMapIntensity: 1.5,
     });
     // Bench cushion — dark burgundy leather
-    const cushionMat = new THREE.MeshStandardMaterial({
-      color: 0x180508, roughness: 0.78, metalness: 0.0,
+    const cushionMat = new THREE.MeshLambertMaterial({
+      color: 0x180508,
     });
     // Rib wood
-    const ribMat = new THREE.MeshStandardMaterial({
-      color: 0x6a3c0e, roughness: 0.86, metalness: 0.0,
+    const ribMat = new THREE.MeshLambertMaterial({
+      color: 0x6a3c0e,
     });
     // Pin block
-    const pinBlockMat = new THREE.MeshStandardMaterial({
-      color: 0x0e0a08, roughness: 0.60, metalness: 0.04,
+    const pinBlockMat = new THREE.MeshLambertMaterial({
+      color: 0x0e0a08,
     });
 
     // ── Lighting — Carnegie Hall drama ──
@@ -1241,8 +1247,8 @@
     keyLight.position.set(4.5, 10.5, 6.5);
     keyLight.target.position.set(0.2, 1.1, 0.4);
     keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width  = 1024;
-    keyLight.shadow.mapSize.height = 1024;
+    keyLight.shadow.mapSize.width  = 512;
+    keyLight.shadow.mapSize.height = 512;
     keyLight.shadow.camera.near = 2;
     keyLight.shadow.camera.far  = 30;
     keyLight.shadow.bias = -0.001;
@@ -1334,10 +1340,11 @@
     // ── Piano group (slight turn to reveal bass curve) ──
     group = new THREE.Group();
     group.rotation.y = 0.12;
+    group.frustumCulled = false;
     scene.add(group);
 
     // Stage floor — polished ebony concert platform
-    const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(28, 0.055, 28), floorMat);
+    const floorMesh = new THREE.Mesh(new THREE.BoxGeometry(18, 0.055, 18), floorMat);
     floorMesh.position.y = -0.027;
     floorMesh.receiveShadow = true;
     scene.add(floorMesh);
@@ -1423,7 +1430,7 @@
     // Tuning pins — 3 staggered rows projecting upward from pin block
     for (let row = 0; row < 3; row++) {
       for (let i = 0; i < 14; i++) {
-        const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.009, 0.009, 0.068, 5), pinMat);
+        const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.009, 0.009, 0.068, 3), pinMat);
         pin.position.set(-1.30 + i * 0.198 + row * 0.025, LEG_H + 0.100, -0.18 - row * 0.082);
         group.add(pin);
       }
@@ -1436,7 +1443,7 @@
       const strLen = 2.60 - t * 1.05;  // bass ~2.60 long, treble ~1.55
       const gage   = 0.0065 - t * 0.003;
       const fan    = (sx + 0.1) * 0.046;
-      const strGeo = new THREE.CylinderGeometry(gage, gage, strLen, 4);
+      const strGeo = new THREE.CylinderGeometry(gage, gage, strLen, 3);
       const str = new THREE.Mesh(strGeo, stringMat);
       // midpoint: starts at pin block (z=-0.30) and extends toward tail (-Z)
       str.position.set(sx, LEG_H + 0.104, -0.30 - strLen * 0.5);
@@ -1481,7 +1488,6 @@
         const bx = -WK_W / 2 + (oct * 7 + off) * kw - kw * 0.5 + kw * 0.04;
         const bk = new THREE.Mesh(new THREE.BoxGeometry(kw * 0.56, 0.110, WK_D * 0.60), keyBlackMat);
         bk.position.set(bx, KBY + 0.138, 0.14);
-        bk.castShadow = true;
         group.add(bk);
       });
     }
@@ -1533,8 +1539,8 @@
     lidPivot.add(lidMesh);
     // Warm underside (visible from above when lid is open)
     const lidInnerGeo = new THREE.ExtrudeGeometry(makeInnerShape(), { depth: 0.007, bevelEnabled: false });
-    const lidInner = new THREE.Mesh(lidInnerGeo, new THREE.MeshStandardMaterial({
-      color: 0x6e2e0e, roughness: 0.80, metalness: 0.0,
+    const lidInner = new THREE.Mesh(lidInnerGeo, new THREE.MeshLambertMaterial({
+      color: 0x6e2e0e,
     }));
     lidInner.rotation.x = -Math.PI / 2;
     lidInner.position.set(0.22, 0.004, -0.20);
@@ -1542,7 +1548,7 @@
     lidPivot.rotation.x = Math.PI / 2 * 0.66;  // rotate up ~60° (positive = lifts lid)
 
     // Prop stick (supports open lid — angled from body up to lid underside)
-    const propStick = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.013, 1.24, 7), lacquerInnerMat);
+    const propStick = new THREE.Mesh(new THREE.CylinderGeometry(0.013, 0.013, 1.24, 4), lacquerInnerMat);
     propStick.position.set(0.24, KBY + 0.54, -0.06);
     propStick.rotation.z =  0.27;
     propStick.rotation.x =  0.08;
@@ -1552,11 +1558,11 @@
     // Two front legs near keyboard end (+Z), one rear leg at tail (-Z)
     const casterMat = new THREE.MeshStandardMaterial({ color: 0x181212, roughness: 0.32, metalness: 0.72 });
     [[-1.12, 0.24], [1.12, 0.24], [-0.10, -3.04]].forEach(([lx, lz]) => {
-      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.068, 0.030, LEG_H, 14), lacquerMat);
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.068, 0.030, LEG_H, 8), lacquerMat);
       leg.position.set(lx, LEG_H / 2, lz);
       leg.castShadow = true;
       group.add(leg);
-      const caster = new THREE.Mesh(new THREE.CylinderGeometry(0.060, 0.060, 0.035, 12), casterMat);
+      const caster = new THREE.Mesh(new THREE.CylinderGeometry(0.060, 0.060, 0.035, 6), casterMat);
       caster.position.set(lx, 0.017, lz);
       group.add(caster);
     });
@@ -1586,9 +1592,8 @@
     benchGroup.add(benchCrown);
 
     [[-0.40, 0.14], [0.40, 0.14], [-0.40, -0.14], [0.40, -0.14]].forEach(([bx, bz]) => {
-      const bl = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.013, LEG_H * 0.97, 8), lacquerMat);
+      const bl = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.013, LEG_H * 0.97, 5), lacquerMat);
       bl.position.set(bx, LEG_H * 0.485, bz);
-      bl.castShadow = true;
       benchGroup.add(bl);
     });
     const stretcherBar = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.020, 0.020), lacquerMat);
@@ -1596,7 +1601,7 @@
     benchGroup.add(stretcherBar);
 
     // ── STAGE DUST PARTICLES (floating in spotlight beam) ──
-    DUST = 300;
+    DUST = 150;
     dustGeo = new THREE.BufferGeometry();
     dPos = new Float32Array(DUST * 3);
     dVel = new Float32Array(DUST * 3);
@@ -1614,11 +1619,15 @@
     }));
     scene.add(dustPoints);
 
-    // ── Resize ──
+    // ── Resize (debounced) ──
+    let resizeTimer;
     window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }, 150);
     });
 
     // ── Camera state ──
@@ -1633,10 +1642,10 @@
 function animate(now) {
       requestAnimationFrame(animate);
   
-      if (isPaused) return; // Skip CPU work when a panel is open
+      if (isPaused || tabHidden) return; // Skip CPU work when a panel is open or tab hidden
       
       const dt = now - lastTime;
-      if (dt < 16) return; // Throttle to ~60fps maximum
+      if (dt < 33) return; // Throttle to ~30fps — background scene
       lastTime = now;
       
       const time = now * 0.001;
