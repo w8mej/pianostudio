@@ -93,6 +93,7 @@
       --cta:   #e8c84a;           /* vivid champagne gold — the CTA color */
       --cta-glow: rgba(232,200,74,0.45);
       --muted: rgba(240,236,228,0.40);
+      --dark-muted: rgba(28,29,31,0.60);
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-mono: 'Geist Mono', 'Courier New', monospace;
     }
@@ -119,18 +120,18 @@
     #cursor {
       position: fixed;
       width: 8px; height: 8px;
-      background: var(--white);
+      background: var(--black);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
       transform: translate(-50%, -50%);
       transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
-      mix-blend-mode: difference;
+      mix-blend-mode: normal;
     }
     #cursor-ring {
       position: fixed;
       width: 32px; height: 32px;
-      border: 1px solid rgba(242,237,232,0.5);
+      border: 1px solid rgba(28,29,31,0.4);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
@@ -158,7 +159,7 @@
       justify-content: space-between;
       padding: 28px 36px;
       pointer-events: all;
-      background: linear-gradient(to bottom, rgba(28,29,31,0.9) 0%, transparent 100%);
+      background: linear-gradient(to bottom, rgba(240,236,228,0.9) 0%, transparent 100%);
       z-index: 100;
     }
 
@@ -170,17 +171,17 @@
 
     .logo-mark {
       width: 36px; height: 36px;
-      border: 1px solid rgba(242,237,232,0.3);
+      border: 1px solid rgba(28,29,31,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 13px;
       letter-spacing: 0.05em;
-      color: var(--white);
+      color: var(--black);
       text-decoration: none;
       transition: border-color 0.25s;
     }
-    .logo-mark:hover { border-color: var(--white); }
+    .logo-mark:hover { border-color: var(--black); }
 
     .nav-links {
       display: flex;
@@ -190,11 +191,11 @@
     .nav-links a { font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(242,237,232,0.7);
+      color: rgba(28,29,31,0.7);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover { color: var(--black); }
 
     .nav-cta { font-size: 12px;
       letter-spacing: 0.14em;
@@ -246,6 +247,7 @@
       letter-spacing: -0.02em;
       max-width: 580px;
       margin-bottom: 32px;
+      color: var(--black);
     }
     h1 em {
       font-style: italic;
@@ -254,7 +256,7 @@
 
     .hero-sub { font-size: 14px;
       letter-spacing: 0.04em;
-      color: var(--muted);
+      color: var(--dark-muted);
       max-width: 260px;
       line-height: 1.8;
       margin-bottom: 40px;
@@ -291,12 +293,12 @@
     .btn-ghost { font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--dark-muted);
       text-decoration: none;
       cursor: none;
       transition: color 0.2s;
     }
-    .btn-ghost:hover { color: var(--white); }
+    .btn-ghost:hover { color: var(--black); }
 
     /* ── Scroll indicator ── */
     .scroll-hint {
@@ -313,14 +315,14 @@
     .scroll-hint span { font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--dark-muted);
       writing-mode: vertical-rl;
       transform: rotate(180deg);
     }
     .scroll-line {
       width: 1px;
       height: 48px;
-      background: linear-gradient(to bottom, transparent, var(--muted));
+      background: linear-gradient(to bottom, transparent, var(--dark-muted));
       animation: scrollPulse 2s ease-in-out infinite;
     }
     @keyframes scrollPulse {
@@ -348,12 +350,12 @@
       font-size: 28px;
       font-weight: 300;
       line-height: 1;
-      color: var(--white);
+      color: var(--black);
     }
     .stat-label { font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--dark-muted);
       margin-top: 3px;
     }
 
@@ -414,7 +416,7 @@
       inset: 0;
       z-index: 20;
       overflow-y: auto;
-      background: rgba(6,5,4,0.96);
+      background: rgba(240,236,228,0.94);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       opacity: 0;
@@ -435,7 +437,7 @@
     .panel-close { font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--dark-muted);
       cursor: none;
       border: none;
       background: none;
@@ -444,7 +446,7 @@
       gap: 10px;
       transition: color 0.2s;
     }
-    .panel-close:hover { color: var(--white); }
+    .panel-close:hover { color: var(--black); }
     .panel-close::before {
       content: '';
       display: block;
@@ -475,7 +477,7 @@
       line-height: 1.0;
       letter-spacing: -0.02em;
       margin-bottom: 48px;
-      color: var(--white);
+      color: var(--black);
     }
     .panel-h1 em { font-style: italic; color: var(--accent); }
 
@@ -484,7 +486,7 @@
       font-size: 20px;
       font-weight: 300;
       line-height: 1.75;
-      color: rgba(242,237,232,0.85);
+      color: rgba(28,29,31,0.85);
       margin-bottom: 64px;
       max-width: 680px;
       border-left: 1px solid var(--warm);
@@ -494,7 +496,7 @@
     .panel-divider {
       width: 48px;
       height: 1px;
-      background: rgba(242,237,232,0.12);
+      background: rgba(28,29,31,0.12);
       margin: 56px 0;
     }
 
@@ -511,7 +513,7 @@
       font-size: clamp(26px, 3vw, 38px);
       line-height: 1.1;
       letter-spacing: -0.01em;
-      color: var(--white);
+      color: var(--black);
       margin-bottom: 20px;
     }
     .section-heading em { font-style: italic; color: var(--accent); }
@@ -521,7 +523,7 @@
       font-size: 17px;
       font-weight: 300;
       line-height: 1.85;
-      color: rgba(242,237,232,0.72);
+      color: rgba(28,29,31,0.72);
       max-width: 680px;
       margin-bottom: 40px;
     }
@@ -536,8 +538,8 @@
     @media (max-width: 680px) { .pillars { grid-template-columns: 1fr; } }
     .pillar {
       padding: 36px 28px;
-      border: 1px solid rgba(242,237,232,0.07);
-      background: rgba(242,237,232,0.02);
+      border: 1px solid rgba(28,29,31,0.07);
+      background: rgba(28,29,31,0.02);
     }
     .pillar-num { font-size: 11px;
       letter-spacing: 0.18em;
@@ -550,34 +552,34 @@
       font-size: 21px;
       font-weight: 300;
       line-height: 1.15;
-      color: var(--white);
+      color: var(--black);
       margin-bottom: 14px;
     }
     .pillar-title em { font-style: italic; color: var(--accent); }
     .pillar-body { font-size: 13px;
       letter-spacing: 0.02em;
       line-height: 1.85;
-      color: rgba(242,237,232,0.55);
+      color: rgba(28,29,31,0.65);
     }
 
     /* Program Cards */
     .program-cards { display: flex; flex-direction: column; gap: 2px; margin: 40px 0; }
     .program-card {
       padding: 40px 36px;
-      border: 1px solid rgba(242,237,232,0.07);
-      background: rgba(242,237,232,0.02);
+      border: 1px solid rgba(28,29,31,0.07);
+      background: rgba(28,29,31,0.02);
       position: relative;
       overflow-x: hidden; overflow-y: auto;
       transition: background 0.3s;
     }
-    .program-card:hover { background: rgba(242,237,232,0.04); }
+    .program-card:hover { background: rgba(28,29,31,0.04); }
     .program-card-num {
       position: absolute;
       top: 28px; right: 32px;
       font-family: var(--font-display);
       font-size: 52px;
       font-weight: 300;
-      color: rgba(242,237,232,0.04);
+      color: rgba(28,29,31,0.04);
       line-height: 1;
     }
     .program-card-label { font-size: 11px;
@@ -591,7 +593,7 @@
       font-size: 28px;
       font-weight: 300;
       letter-spacing: -0.01em;
-      color: var(--white);
+      color: var(--black);
       margin-bottom: 20px;
       line-height: 1.1;
     }
@@ -601,7 +603,7 @@
       font-size: 16px;
       font-weight: 300;
       line-height: 1.85;
-      color: rgba(242,237,232,0.65);
+      color: rgba(28,29,31,0.72);
       max-width: 640px;
     }
 
@@ -611,11 +613,11 @@
       display: grid;
       grid-template-columns: 64px 1fr;
       gap: 0;
-      border: 1px solid rgba(242,237,232,0.07);
+      border: 1px solid rgba(28,29,31,0.07);
     }
     .step-num-col {
       padding: 32px 0 32px 28px;
-      border-right: 1px solid rgba(242,237,232,0.07);
+      border-right: 1px solid rgba(28,29,31,0.07);
       display: flex;
       align-items: flex-start;
     }
@@ -623,7 +625,7 @@
       font-family: var(--font-display);
       font-size: 38px;
       font-weight: 300;
-      color: rgba(200,151,90,0.35);
+      color: rgba(200,151,90,0.65);
       line-height: 1;
     }
     .step-content { padding: 32px 36px; }
@@ -631,33 +633,33 @@
       font-family: var(--font-display);
       font-size: 22px;
       font-weight: 300;
-      color: var(--white);
+      color: var(--black);
       margin-bottom: 10px;
     }
     .step-title em { font-style: italic; color: var(--accent); }
     .step-body { font-size: 13px;
       letter-spacing: 0.02em;
       line-height: 1.85;
-      color: rgba(242,237,232,0.55);
+      color: rgba(28,29,31,0.72);
     }
 
     /* FAQ */
     .faq { margin: 40px 0; }
     .faq-item {
-      border-bottom: 1px solid rgba(242,237,232,0.07);
+      border-bottom: 1px solid rgba(28,29,31,0.07);
       padding: 28px 0;
     }
     .faq-q {
       font-family: var(--font-display);
       font-size: 19px;
       font-weight: 300;
-      color: var(--white);
+      color: var(--black);
       margin-bottom: 12px;
     }
     .faq-a { font-size: 13px;
       letter-spacing: 0.02em;
       line-height: 1.85;
-      color: rgba(242,237,232,0.55);
+      color: rgba(28,29,31,0.72);
       max-width: 640px;
     }
 
@@ -682,16 +684,16 @@
     .cta-opt { font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--black);
       text-decoration: none;
       cursor: none;
       transition: border-color 0.2s, background 0.2s;
     }
     .cta-opt:hover { border-color: var(--warm); background: rgba(200,151,90,0.08); }
     .cta-opt.primary {
-      background: var(--white);
-      color: var(--black);
-      border-color: var(--white);
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
     }
     .cta-opt.primary:hover { background: var(--warm); border-color: var(--warm); }
   </style>
@@ -834,8 +836,8 @@
   
     <div id="overview" class="reveal" style="pointer-events: all; padding: 120px 36px; max-width: 1000px; margin: 0 auto; min-height: 100vh; position: relative; z-index: 20;">
       <div style="margin-bottom: 80px;">
-        <h2 style="font-family: var(--font-display); font-weight: 300; font-size: clamp(38px, 5vw, 64px); line-height: 1.1; margin-bottom: 24px;">Mastering the Art of <em>Focus</em></h2>
-        <p style="font-size: 15px; letter-spacing: 0.02em; line-height: 1.85; color: rgba(242,237,232,0.8); max-width: 720px; font-family: var(--font-display);">
+        <h2 style="font-family: var(--font-display); font-weight: 300; font-size: clamp(38px, 5vw, 64px); line-height: 1.1; margin-bottom: 24px; color: var(--black);">Mastering the Art of <em>Focus</em></h2>
+        <p style="font-size: 15px; letter-spacing: 0.02em; line-height: 1.85; color: rgba(28,29,31,0.8); max-width: 720px; font-family: var(--font-display);">
           Our modern lives are louder, faster, and more demanding than ever. Between double shifts, endless screen time, and overbooked schedules, finding a moment of genuine focus can feel impossible. 
           <br><br>
           Whether you are a professional seeking a cognitive reset after a demanding week, or a parent looking for high-quality, screen-free enrichment that builds resilience in your child, <strong>Menerick Piano &amp; Voice Studios</strong> offers the solution. Here, we slow down. We listen. We build mastery, step by step.
@@ -843,25 +845,25 @@
       </div>
       
       <div class="pillars" style="margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
-        <div class="pillar">
+        <div class="pillar" style="border: 1px solid rgba(28,29,31,0.08); background: rgba(28,29,31,0.02);">
           <span class="pillar-num">01</span>
-          <h3 class="pillar-title"><em>Cognitive</em> Development</h3>
-          <p class="pillar-body">Our Suzuki-informed method develops essential life skills—patience, problem-solving, and deep focus—giving students an academic and personal edge.</p>
+          <h3 class="pillar-title" style="color: var(--black);"><em>Cognitive</em> Development</h3>
+          <p class="pillar-body" style="color: rgba(28,29,31,0.65);">Our Suzuki-informed method develops essential life skills—patience, problem-solving, and deep focus—giving students an academic and personal edge.</p>
         </div>
-        <div class="pillar">
+        <div class="pillar" style="border: 1px solid rgba(28,29,31,0.08); background: rgba(28,29,31,0.02);">
           <span class="pillar-num">02</span>
-          <h3 class="pillar-title">A Restorative <em>Outlet</em></h3>
-          <p class="pillar-body">Trade the urgency of the workday for the timelessness of a sonata. Piano study provides a proven method for stress relief and neurological reset.</p>
+          <h3 class="pillar-title" style="color: var(--black);">A Restorative <em>Outlet</em></h3>
+          <p class="pillar-body" style="color: rgba(28,29,31,0.65);">Trade the urgency of the workday for the timelessness of a sonata. Piano study provides a proven method for stress relief and neurological reset.</p>
         </div>
-        <div class="pillar">
+        <div class="pillar" style="border: 1px solid rgba(28,29,31,0.08); background: rgba(28,29,31,0.02);">
           <span class="pillar-num">03</span>
-          <h3 class="pillar-title">Elevated <em>Performance</em></h3>
-          <p class="pillar-body">From private parties and country club invitations to our formal Spring Recital, students gain the poise and confidence to share their art with the world.</p>
+          <h3 class="pillar-title" style="color: var(--black);">Elevated <em>Performance</em></h3>
+          <p class="pillar-body" style="color: rgba(28,29,31,0.65);">From private parties and country club invitations to our formal Spring Recital, students gain the poise and confidence to share their art with the world.</p>
         </div>
-        <div class="pillar">
+        <div class="pillar" style="border: 1px solid rgba(28,29,31,0.08); background: rgba(28,29,31,0.02);">
           <span class="pillar-num">04</span>
-          <h3 class="pillar-title"><em>Tailored</em> Instruction</h3>
-          <p class="pillar-body">Every curriculum is uniquely crafted. We respect your time and individual goals, ensuring that each minute at the bench is profoundly productive.</p>
+          <h3 class="pillar-title" style="color: var(--black);"><em>Tailored</em> Instruction</h3>
+          <p class="pillar-body" style="color: rgba(28,29,31,0.65);">Every curriculum is uniquely crafted. We respect your time and individual goals, ensuring that each minute at the bench is profoundly productive.</p>
         </div>
       </div>
     </div>
@@ -1024,22 +1026,22 @@
       
       <div class="pillars" style="grid-template-columns: repeat(2, 1fr); margin: 0 0 56px;">
         <div class="pillar">
-          <span class="pillar-num" style="color:var(--white);">Voice</span>
+          <span class="pillar-num" style="color:var(--black);">Voice</span>
           <div class="pillar-title" style="font-size:17px;">Private Instruction</div>
           <p class="pillar-body">Tailored 30-minute sessions covering classical and popular repertoire with an emphasis on vocal range and breathing techniques. Students utilize practice mirrors and vocal recordings at home. An accompanist is provided twice a month and for the Spring Recital.</p>
         </div>
         <div class="pillar">
-          <span class="pillar-num" style="color:var(--white);">Voice</span>
+          <span class="pillar-num" style="color:var(--black);">Voice</span>
           <div class="pillar-title" style="font-size:17px;">Group Instruction</div>
           <p class="pillar-body">One-hour collaborative classes (maximum 8 students) organized by level (Elementary to Advanced). Group instruction culminates in a class performance. An accompanist is provided twice a month.</p>
         </div>
         <div class="pillar">
-          <span class="pillar-num" style="color:var(--white);">Piano</span>
+          <span class="pillar-num" style="color:var(--black);">Piano</span>
           <div class="pillar-title" style="font-size:17px;">Equipment Standards</div>
           <p class="pillar-body">Beginners may start on a 40+ key keyboard. After six months of instruction, a high-quality, annually tuned piano is required to ensure optimal progress. Instrument upgrades make family progress at the piano far more rewarding.</p>
         </div>
         <div class="pillar">
-          <span class="pillar-num" style="color:var(--white);">Studio Service</span>
+          <span class="pillar-num" style="color:var(--black);">Studio Service</span>
           <div class="pillar-title" style="font-size:17px;">Piano Appraisals</div>
           <p class="pillar-body">Used pianos are a studio specialty. We buy and sell Knabe, Mason &amp; Hamlin, and Steinway instruments, offering complimentary appraisal services for our students. Our technicians are the absolute best, trained directly at Steinway in New York.</p>
         </div>
@@ -1069,7 +1071,7 @@
   <script>
   window.addEventListener('load', () => {
   (function() {
-    let renderer, scene, camera, group, dustGeo, dPos, dVel, cavityLight, mouseX, mouseY, camX, camY, camZ, isPaused, lastTime;
+    let renderer, scene, camera, group, dustGeo, dPos, dVel, cavityLight, mouseX, mouseY, camX, camY, camZ, isPaused, lastTime, DUST;
 
     // ── Cursor ──
     const cursor = document.getElementById('cursor');
@@ -1134,12 +1136,12 @@
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
-    renderer.setClearColor(0x1c1d1f);  // deep mineral grey
-    
+    renderer.setClearColor(0xf0ece4);  // warm ivory
+
     function runInit() { 
  scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x1c1d1f);
-    scene.fog = new THREE.FogExp2(0x1c1d1f, 0.015);
+    scene.background = new THREE.Color(0xf0ece4);
+    scene.fog = new THREE.FogExp2(0xf0ece4, 0.015);
 
     // ── Environment map — gives the lacquer real mirror reflections ──
     const pmrem = new THREE.PMREMGenerator(renderer);
@@ -1147,7 +1149,7 @@
     const envScene = new THREE.Scene();
     const envHull = new THREE.Mesh(
       new THREE.SphereGeometry(80, 16, 16),
-      new THREE.MeshBasicMaterial({ color: 0x030210, side: THREE.BackSide })
+      new THREE.MeshBasicMaterial({ color: 0xe0d8d0, side: THREE.BackSide })
     );
     envScene.add(envHull);
     // Hot spots that reflect on the lacquer surface
@@ -1214,9 +1216,9 @@
     const pedalMat = new THREE.MeshStandardMaterial({
       color: 0xd4a818, roughness: 0.04, metalness: 0.98, envMapIntensity: 4.5,
     });
-    // Concert stage floor — polished walnut
+    // Concert stage floor — polished light maple
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x1a140f, roughness: 0.04, metalness: 0.94, envMapIntensity: 3.0,
+      color: 0xd4c8b8, roughness: 0.15, metalness: 0.10, envMapIntensity: 1.5,
     });
     // Bench cushion — dark burgundy leather
     const cushionMat = new THREE.MeshStandardMaterial({
@@ -1599,7 +1601,7 @@
     benchGroup.add(stretcherBar);
 
     // ── STAGE DUST PARTICLES (floating in spotlight beam) ──
-    const DUST = 300;
+    DUST = 300;
     dustGeo = new THREE.BufferGeometry();
     dPos = new Float32Array(DUST * 3);
     dVel = new Float32Array(DUST * 3);
@@ -1613,7 +1615,7 @@
     }
     dustGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
     const dustPoints = new THREE.Points(dustGeo, new THREE.PointsMaterial({
-      color: 0xfff0d0, size: 0.016, transparent: true, opacity: 0.50, sizeAttenuation: true,
+      color: 0x4a4030, size: 0.016, transparent: true, opacity: 0.40, sizeAttenuation: true,
     }));
     scene.add(dustPoints);
 
