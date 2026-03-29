@@ -1061,7 +1061,7 @@
           741 Kenmoor Ave. SE, Suite B<br>
           Grand Rapids, MI 49546<br>
           <a href="tel:+16165601401" style="color: var(--cta); text-decoration: none;">616-560-1401</a><br>
-          <a href="mailto:lisamenerickpiano@gmail.com" style="color: var(--cta); text-decoration: none;">lisamenerickpiano@gmail.com</a>
+          <a href="#" class="studio-email" data-user="lisamenerickpiano" data-domain="gmail.com" style="color: var(--cta); text-decoration: none;">lisamenerickpiano<span>@</span>gmail.com</a>
         </address>
       </div>
 
@@ -1562,14 +1562,9 @@
     });
 
     // ── PEDAL LYRE ──
-    const lyreMesh = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.45, 0.056), lacquerMat);
-    lyreMesh.position.set(0, 0.225, 0.50);
+    const lyreMesh = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.40, 0.056), lacquerMat);
+    lyreMesh.position.set(0, 0.250, 0.50);
     group.add(lyreMesh);
-    [-0.20, 0.20].forEach(px => {
-      const ll = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.225, 7), lacquerMat);
-      ll.position.set(px, 0.112, 0.560);
-      group.add(ll);
-    });
     [-0.17, 0, 0.17].forEach(px => {
       const pedal = new THREE.Mesh(new THREE.BoxGeometry(0.088, 0.036, 0.168), pedalMat);
       pedal.position.set(px, 0.086, 0.538);
@@ -1711,6 +1706,14 @@ function animate(now) {
     // Esc key closes panels
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeAllPanels();
+    });
+
+    // Email link unobfuscation (bypasses Cloudflare's blocking script)
+    document.querySelectorAll('.studio-email').forEach(el => {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        window.location.href = `mailto:${el.dataset.user}@${el.dataset.domain}`;
+      });
     });
 
   })();
