@@ -378,7 +378,7 @@
     #loader.hidden { opacity: 0; visibility: hidden; }
 
     .loader-logo {
-      font-family: var(--font-display);
+      font-family: Georgia, 'Times New Roman', serif;
       font-size: 11px;
       letter-spacing: 0.3em;
       text-transform: uppercase;
@@ -397,6 +397,7 @@
       transition: width 0.3s ease;
     }
     .loader-pct {
+      font-family: 'Courier New', monospace;
       font-size: 9px;
       letter-spacing: 0.15em;
       color: var(--muted);
@@ -1071,8 +1072,8 @@
   </div>
   
   <script>
-  // ── Fallback: if Three.js/window.load takes >2s, reveal hero content anyway ──
-  // This ensures LCP is not blocked by the 3D scene download/parse.
+  // ── Reveal hero content as soon as DOM is ready, independent of Three.js ──
+  // LCP must not be blocked by a decorative 3D background download.
   (function() {
     let revealed = false;
     window.__revealHero = function() {
@@ -1086,7 +1087,12 @@
         setTimeout(() => el.classList.add('in'), i * 80);
       });
     };
-    setTimeout(window.__revealHero, 2000);
+    // Reveal after DOM is parsed + short delay for loader animation feel
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => setTimeout(window.__revealHero, 300));
+    } else {
+      setTimeout(window.__revealHero, 300);
+    }
   })();
   </script>
 
