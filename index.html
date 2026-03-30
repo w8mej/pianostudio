@@ -13,8 +13,10 @@
   <meta property="og:url" content="https://grandrapidspiano.com/" />
   <meta property="og:image" content="https://grandrapidspiano.com/og-image.jpg" />
   <meta property="og:description" content="Award-winning piano &amp; voice lessons in Grand Rapids, MI with Lisa Menerick. Degree-certified teacher, NGPT member, President of West Michigan Piano Teachers. Ages 4–adult." />
-  <link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="https://fonts.gstatic.com/s/geistmono/v4/or3nQ6H-1_WfwkMZI_qYFrcdmg.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
+  <link rel="preload" href="https://fonts.gstatic.com/s/geistmono/v4/or3nQ6H-1_WfwkMZI_qYFrcdmg.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="preconnect" href="https://stats.g.doubleclick.net" />
   <link rel="preconnect" href="https://analytics.google.com" />
   <link rel="dns-prefetch" href="https://stats.g.doubleclick.net" />
@@ -63,7 +65,7 @@
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
   </style>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer fetchpriority="low" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <!-- Google tag (gtag.js) - Deferred -->
   <script>
@@ -371,6 +373,7 @@
       justify-content: center;
       gap: 24px;
       transition: opacity 0.8s ease, visibility 0.8s;
+      will-change: opacity;
     }
     #loader.hidden { opacity: 0; visibility: hidden; }
 
@@ -401,13 +404,11 @@
 
     /* ── Entry animation ── */
     .reveal {
-      opacity: 0;
-      transform: translateY(20px);
       transition: opacity 0.9s ease, transform 0.9s ease;
     }
     .reveal.in {
-      opacity: 1;
-      transform: none;
+      opacity: 1 !important;
+      transform: none !important;
     }
 
     /* ── Content Panels (Pedagogy / Programs / Admissions) ── */
@@ -780,6 +781,7 @@
   </script>
 </head>
 <body>
+  <style id="reveal-init">.reveal{opacity:0;transform:translateY(20px)}</style>
 
   <!-- Loader -->
   <div id="loader">
@@ -1069,6 +1071,26 @@
   </div>
   
   <script>
+  // ── Fallback: if Three.js/window.load takes >2s, reveal hero content anyway ──
+  // This ensures LCP is not blocked by the 3D scene download/parse.
+  (function() {
+    let revealed = false;
+    window.__revealHero = function() {
+      if (revealed) return;
+      revealed = true;
+      const loader = document.getElementById('loader');
+      if (loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
+      }
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        setTimeout(() => el.classList.add('in'), i * 80);
+      });
+    };
+    setTimeout(window.__revealHero, 2000);
+  })();
+  </script>
+
+  <script>
   window.addEventListener('load', () => {
   (function() {
     let renderer, scene, camera, group, dustGeo, dPos, dVel, cavityLight, mouseX, mouseY, camX, camY, camZ, isPaused, lastTime, DUST;
@@ -1114,10 +1136,8 @@
         loaderPct.textContent = '100%';
         setTimeout(() => {
           loaderEl.classList.add('hidden');
-          // Trigger reveal animations
-          document.querySelectorAll('.reveal').forEach((el, i) => {
-            setTimeout(() => el.classList.add('in'), i * 80);
-          });
+          // Trigger reveal animations (via shared function to deduplicate with fallback)
+          if (window.__revealHero) window.__revealHero();
         }, 320);
       } else {
         loaderBar.style.width = Math.min(pct, 100) + '%';
